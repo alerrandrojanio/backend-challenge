@@ -1,0 +1,39 @@
+﻿using Challenge.API.Models.Account;
+using Challenge.Domain.DTOs.Account;
+using Challenge.Domain.DTOs.Account.Response;
+using Challenge.Domain.Interfaces;
+using Mapster;
+using Microsoft.AspNetCore.Mvc;
+
+namespace Challenge.API.Controllers;
+
+[ApiController]
+[Route("api/account")]
+public class AccountController : ControllerBase
+{
+    private readonly IAccountService _accountService;
+
+    public AccountController(IAccountService accountService)
+    {
+        _accountService = accountService;
+    }
+
+    [HttpPost]
+    public async Task<ActionResult> CreateAccount([FromBody] CreateAccountModel createAccountModel)
+    {
+        CreateAccountDTO createAccountDTO = createAccountModel.Adapt<CreateAccountDTO>();
+        
+        CreateAccountResponseDTO? createAccountResponseDTO = _accountService.CreateAccount(createAccountDTO);
+        
+        if (createAccountResponseDTO is null)
+            return BadRequest();
+        
+        return Ok(createAccountResponseDTO);
+    }
+
+    [HttpPost("/transfer")]
+    public async Task<ActionResult> CreateTransfer([FromBody] CreateTransferModel createTransferModel)
+    {
+        return Ok();
+    }
+}

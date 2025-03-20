@@ -1,4 +1,4 @@
-﻿namespace Challenge.Domain.DTOs.Response;
+﻿namespace Challenge.Domain.DTOs.Person.Response;
 
 public class CreateIndividualPersonResponseDTO
 {

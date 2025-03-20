@@ -1,5 +1,5 @@
-﻿using Challenge.Domain.DTOs;
-using Challenge.Domain.DTOs.Response;
+﻿using Challenge.Domain.DTOs.Person;
+using Challenge.Domain.DTOs.Person.Response;
 using Challenge.Domain.Entities;
 using Challenge.Domain.Interfaces;
 using Mapster;

@@ -1,6 +1,6 @@
-﻿using Challenge.API.Models;
-using Challenge.Domain.DTOs;
-using Challenge.Domain.DTOs.Response;
+﻿using Challenge.API.Models.Person;
+using Challenge.Domain.DTOs.Person;
+using Challenge.Domain.DTOs.Person.Response;
 using Challenge.Domain.Interfaces;
 using Mapster;
 using Microsoft.AspNetCore.Mvc;

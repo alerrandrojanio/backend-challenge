@@ -15,4 +15,8 @@
     <ProjectReference Include="..\Challenge.DI\Challenge.DI.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Validators\" />
+  </ItemGroup>
+
 </Project>

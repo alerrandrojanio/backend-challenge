@@ -14,15 +14,13 @@ public class PersonRepository : IPersonRepository
         _unitOfWork = unitOfWork;
     }
 
-    public Person? GetPersonById(int id)
+    public Person? GetPersonById(Guid personId)
     {
-        using SqlCommand command = new("GetPersonById", _unitOfWork.Connection)
-        {
-            CommandType = CommandType.StoredProcedure,
-            Transaction = _unitOfWork.Transaction
-        };
+        using SqlCommand command = _unitOfWork.Connection.CreateCommand();
 
-        command.Parameters.Add(new SqlParameter("@personId", SqlDbType.Int) { Value = id });
+        command.Transaction = _unitOfWork.Transaction;
+        command.CommandType = CommandType.StoredProcedure;
+        command.CommandText = "GetPersonById";
 
         using SqlDataReader reader = command.ExecuteReader();
 
@@ -30,8 +28,8 @@ public class PersonRepository : IPersonRepository
         {
             return new Person
             {
-                Id = Guid.Parse(reader.GetString(reader.GetOrdinal("Id"))),  
-                Name = reader.GetString(reader.GetOrdinal("Name"))           
+                Id = Guid.Parse(reader.GetString("PersonId")),  
+                Name = reader.GetString("Name")        
             };
         }
 

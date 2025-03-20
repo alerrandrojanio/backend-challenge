@@ -1,4 +1,4 @@
-﻿namespace Challenge.API.Models;
+﻿namespace Challenge.API.Models.Person;
 
 public class CreateIndividualPersonModel
 {

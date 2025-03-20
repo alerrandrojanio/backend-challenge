@@ -4,7 +4,7 @@ namespace Challenge.Domain.Interfaces;
 
 public interface IPersonRepository
 {
-    Person? GetPersonById(int id);
+    Person? GetPersonById(Guid personId);
 
     Person CreatePerson(Person person);
 }

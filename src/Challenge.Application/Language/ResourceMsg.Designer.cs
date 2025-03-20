@@ -61,6 +61,15 @@ namespace Challenge.Application.Language {
         }
         
         /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a AccountNumber já existente.
+        /// </summary>
+        internal static string Account_Exists {
+            get {
+                return ResourceManager.GetString("Account.Exists", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a Person não encontrada para Id: {0}.
         /// </summary>
         internal static string Person_NotFound {

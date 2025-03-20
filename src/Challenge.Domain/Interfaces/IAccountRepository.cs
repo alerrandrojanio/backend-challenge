@@ -4,7 +4,7 @@ namespace Challenge.Domain.Interfaces;
 
 public interface IAccountRepository
 {
-    bool AccountExists(string accountNumber);
+    Account? GetAccountByAccountNumber(string accountNumber);
 
     Account CreateAccount(Account account);
 }

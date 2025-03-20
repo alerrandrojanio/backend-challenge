@@ -1,6 +1,7 @@
 ﻿using Challenge.Domain.Entities;
 using Challenge.Domain.Interfaces;
 using Microsoft.Data.SqlClient;
+using System;
 using System.Data;
 
 namespace Challenge.Infrastructure.Repositories;
@@ -22,14 +23,18 @@ public class PersonRepository : IPersonRepository
         command.CommandType = CommandType.StoredProcedure;
         command.CommandText = "GetPersonById";
 
+        command.Parameters.Add(new SqlParameter("@personId", personId));
+
         using SqlDataReader reader = command.ExecuteReader();
 
         if (reader.Read())
         {
             return new Person
             {
-                Id = Guid.Parse(reader.GetString("PersonId")),  
-                Name = reader.GetString("Name")        
+                Id = reader.GetGuid("PersonId"),  
+                Name = reader.GetString("Name"),
+                Email = reader.GetString("Email"),
+                Phone = reader.GetString("Phone")
             };
         }
 

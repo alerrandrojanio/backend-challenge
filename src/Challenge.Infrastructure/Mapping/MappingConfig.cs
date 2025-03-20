@@ -1,4 +1,6 @@
-﻿using Challenge.Domain.DTOs.Person;
+﻿using Challenge.Domain.DTOs.Account;
+using Challenge.Domain.DTOs.Account.Response;
+using Challenge.Domain.DTOs.Person;
 using Challenge.Domain.DTOs.Person.Response;
 using Challenge.Domain.Entities;
 using Mapster;
@@ -35,5 +37,17 @@ public static class MappingConfig
            .Map(dest => dest.CNPJ, src => src.CNPJ)
            .Map(dest => dest.MerchantName, src => src.MerchantName);
         #endregion CreateMerchantPerson
+
+        #region CreateAccount
+        TypeAdapterConfig<(CreateAccountDTO createAccountDTO, Person person), Account>.NewConfig()
+           .Map(dest => dest.Person, src => src.person)
+           .Map(dest => dest.AccountNumber, src => src.createAccountDTO.AccountNumber)
+           .Map(dest => dest.Balance, src => src.createAccountDTO.Balance);
+
+        TypeAdapterConfig<Account, CreateAccountResponseDTO>.NewConfig()
+           .Map(dest => dest.PersonId, src => src.Person.Id)
+           .Map(dest => dest.AccountNumber, src => src.AccountNumber)
+           .Map(dest => dest.Balance, src => src.Balance);
+        #endregion CreateAccount
     }
 }

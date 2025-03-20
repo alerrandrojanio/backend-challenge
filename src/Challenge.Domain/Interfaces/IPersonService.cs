@@ -6,4 +6,6 @@ namespace Challenge.Domain.Interfaces;
 public interface IPersonService
 {
     CreateIndividualPersonResponseDTO? CreateIndividualPerson(CreateIndividualPersonDTO createIndividualPersonDTO);
+
+    CreateMerchantPersonResponseDTO? CreateMerchantPerson(CreateMerchantPersonDTO createMerchantPersonDTO);
 }

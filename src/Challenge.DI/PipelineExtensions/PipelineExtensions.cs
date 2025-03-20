@@ -16,14 +16,14 @@ public static class PipelineExtensions
         services.AddScoped<IUnitOfWork, UnitOfWork>();
         services.AddScoped<IPersonRepository, PersonRepository>();
         services.AddScoped<IIndividualPersonRepository, IndividualPersonRepository>();
+        services.AddScoped<IMerchantPersonRepository, MerchantPersonRepository>();
     }
 
     public static void ConfigureSettings(this IServiceCollection services, IConfiguration configuration)
     {
-        var dbSettings = new DatabaseSettings
+        services.Configure<DatabaseSettings>(options =>
         {
-            DefaultConnection = configuration.GetConnectionString("DefaultConnection") ?? string.Empty
-        };
-        services.AddSingleton(dbSettings);
+            options.DefaultConnection = configuration.GetConnectionString("DefaultConnection") ?? string.Empty;
+        });
     }
 }

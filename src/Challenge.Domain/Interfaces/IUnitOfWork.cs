@@ -1,4 +1,4 @@
-﻿using MySql.Data.MySqlClient;
+﻿using Microsoft.Data.SqlClient;
 
 namespace Challenge.Domain.Interfaces;
 
@@ -9,8 +9,8 @@ public interface IUnitOfWork : IDisposable
     void Commit();
     
     void Rollback();
-    
-    MySqlConnection Connection { get; }
-    
-    MySqlTransaction? Transaction { get; }
+
+    public SqlConnection Connection { get; }
+
+    public SqlTransaction? Transaction { get; }
 }

@@ -4,5 +4,5 @@ namespace Challenge.Domain.Interfaces;
 
 public interface IIndividualPersonRepository
 {
-    void CreateIndividualPerson(IndividualPerson individualPerson);
+    IndividualPerson CreateIndividualPerson(IndividualPerson individualPerson);
 }

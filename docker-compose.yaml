@@ -1,10 +1,23 @@
- services:
-    db:
-       image: mysql:8
-       environment:
-         MYSQL_ROOT_PASSWORD: root
-         MYSQL_DATABASE: challenge
-       ports:
-         - 3306:3306
-       volumes:
-         - ./.docker/mysql:/docker-entrypoint-initdb.d
+version: '3.8'
+
+services:
+  mssql:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: sql_server
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=Password@123
+    ports:
+      - "1433:1433"
+    volumes:
+      - sql_data:/var/opt/mssql
+      - ./init-db.sql:/docker-entrypoint-initdb.d/init-db.sql
+    networks:
+      - mssql_network
+
+volumes:
+  sql_data:
+
+networks:
+  mssql_network:
+    driver: bridge

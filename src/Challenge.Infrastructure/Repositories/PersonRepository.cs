@@ -1,6 +1,6 @@
 ﻿using Challenge.Domain.Entities;
 using Challenge.Domain.Interfaces;
-using MySql.Data.MySqlClient;
+using Microsoft.Data.SqlClient;
 using System.Data;
 
 namespace Challenge.Infrastructure.Repositories;
@@ -16,22 +16,22 @@ public class PersonRepository : IPersonRepository
 
     public Person? GetPersonById(int id)
     {
-        using MySqlCommand command = new("GetPersonById", _unitOfWork.Connection)
+        using SqlCommand command = new("GetPersonById", _unitOfWork.Connection)
         {
             CommandType = CommandType.StoredProcedure,
-            Transaction = _unitOfWork.Transaction 
+            Transaction = _unitOfWork.Transaction
         };
 
-        command.Parameters.AddWithValue("@personId", id);
+        command.Parameters.Add(new SqlParameter("@personId", SqlDbType.Int) { Value = id });
 
-        using MySqlDataReader reader = command.ExecuteReader();
+        using SqlDataReader reader = command.ExecuteReader();
 
         if (reader.Read())
         {
             return new Person
             {
-                Id = Guid.Parse(reader.GetString("Id")),
-                Name = reader.GetString("Name")
+                Id = Guid.Parse(reader.GetString(reader.GetOrdinal("Id"))),  
+                Name = reader.GetString(reader.GetOrdinal("Name"))           
             };
         }
 
@@ -40,18 +40,20 @@ public class PersonRepository : IPersonRepository
 
     public Person CreatePerson(Person person)
     {
-        using MySqlCommand command = _unitOfWork.Connection.CreateCommand();
+        using SqlCommand command = _unitOfWork.Connection.CreateCommand();
 
         command.Transaction = _unitOfWork.Transaction;
         command.CommandType = CommandType.StoredProcedure;
         command.CommandText = "CreatePerson";
 
-        person.Id = Guid.NewGuid();
+        command.Parameters.Add(new SqlParameter("@name", person.Name));
+        command.Parameters.Add(new SqlParameter("@email", person.Email));
+        command.Parameters.Add(new SqlParameter("@phone", person.Phone));
 
-        command.Parameters.AddWithValue("@personId", person.Id);
-        command.Parameters.AddWithValue("@name", person.Name);
+       var result = command.ExecuteScalar();
 
-        command.ExecuteNonQuery();
+        if (result is not null)
+            person.Id = Guid.Parse(result.ToString());
 
         return person;
     }

@@ -1,6 +1,6 @@
 ﻿using Challenge.Domain.Entities;
 using Challenge.Domain.Interfaces;
-using MySql.Data.MySqlClient;
+using Microsoft.Data.SqlClient;
 using System.Data;
 
 namespace Challenge.Infrastructure.Repositories;
@@ -14,18 +14,23 @@ public class IndividualPersonRepository : IIndividualPersonRepository
         _unitOfWork = unitOfWork;
     }
 
-    public void CreateIndividualPerson(IndividualPerson individualPerson)
+    public IndividualPerson CreateIndividualPerson(IndividualPerson individualPerson)
     {
-        using MySqlCommand command = _unitOfWork.Connection.CreateCommand();
+        using SqlCommand command = _unitOfWork.Connection.CreateCommand();
 
         command.Transaction = _unitOfWork.Transaction;
         command.CommandType = CommandType.StoredProcedure;
         command.CommandText = "CreateIndividualPerson";
 
-        command.Parameters.AddWithValue("@personId", individualPerson.Person.Id);
-        command.Parameters.AddWithValue("@name", individualPerson.Person.Name);
-        command.Parameters.AddWithValue("@cpf", individualPerson.CPF);
+        command.Parameters.Add(new SqlParameter("@personId", individualPerson.Person.Id));
+        command.Parameters.Add(new SqlParameter("@cpf", individualPerson.CPF));
+        command.Parameters.Add(new SqlParameter("@birthDate", individualPerson.BirthDate));
 
-        command.ExecuteNonQuery();
+        var result = command.ExecuteScalar();
+
+        if (result is not null)
+            individualPerson.Id = Guid.Parse(result.ToString());
+
+        return individualPerson;
     }
 }

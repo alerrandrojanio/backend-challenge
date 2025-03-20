@@ -1,5 +1,8 @@
-﻿namespace Challenge.Domain.Interfaces;
+﻿using Challenge.Domain.Entities;
+
+namespace Challenge.Domain.Interfaces;
 
 public interface IMerchantPersonRepository
 {
+    MerchantPerson CreateMerchantPerson(MerchantPerson merchantPerson);
 }

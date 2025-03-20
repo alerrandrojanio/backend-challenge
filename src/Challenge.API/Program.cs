@@ -1,4 +1,5 @@
 using Challenge.DI.PipelineExtensions;
+using Challenge.Infrastructure.Mapping;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -6,6 +7,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddServices();
 builder.Services.ConfigureSettings(builder.Configuration);
+
+MappingConfig.RegisterMappings();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

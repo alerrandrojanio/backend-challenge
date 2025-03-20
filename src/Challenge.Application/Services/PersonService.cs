@@ -10,18 +10,20 @@ public class PersonService : IPersonService
 {
     private readonly IPersonRepository _personRepository;
     private readonly IIndividualPersonRepository _individualPersonRepository;
+    private readonly IMerchantPersonRepository _merchantPersonRepository;
     private readonly IUnitOfWork _unitOfWork;
 
-    public PersonService(IPersonRepository personRepository, IIndividualPersonRepository individualPersonRepository, IUnitOfWork unitOfWork)
+    public PersonService(IPersonRepository personRepository, IIndividualPersonRepository individualPersonRepository, IMerchantPersonRepository merchantPersonRepository, IUnitOfWork unitOfWork)
     {
         _personRepository = personRepository;
         _individualPersonRepository = individualPersonRepository;
+        _merchantPersonRepository = merchantPersonRepository;
         _unitOfWork = unitOfWork;
     }
 
     public CreateIndividualPersonResponseDTO? CreateIndividualPerson(CreateIndividualPersonDTO createIndividualPersonDTO)
     {
-        CreateIndividualPersonResponseDTO createIndividualPersonResponseDTO = null;
+        CreateIndividualPersonResponseDTO createIndividualPersonResponseDTO = null!;
         
         try
         {
@@ -31,7 +33,7 @@ public class PersonService : IPersonService
 
             person = _personRepository.CreatePerson(person);
 
-            IndividualPerson individualPerson = (createIndividualPersonDTO, person).Adapt<IndividualPerson>();
+            IndividualPerson individualPerson = ValueTuple.Create(createIndividualPersonDTO, person).Adapt<IndividualPerson>();
 
             _individualPersonRepository.CreateIndividualPerson(individualPerson);
 
@@ -45,5 +47,33 @@ public class PersonService : IPersonService
         }
 
         return createIndividualPersonResponseDTO;
+    }
+
+    public CreateMerchantPersonResponseDTO? CreateMerchantPerson(CreateMerchantPersonDTO createMerchantPersonDTO)
+    {
+        CreateMerchantPersonResponseDTO createMerchantPersonResponseDTO = null!;
+
+        try
+        {
+            _unitOfWork.BeginTransaction();
+
+            Person person = createMerchantPersonDTO.Adapt<Person>();
+
+            person = _personRepository.CreatePerson(person);
+
+            MerchantPerson merchantPerson = ValueTuple.Create(createMerchantPersonDTO, person).Adapt<MerchantPerson>();
+
+            _merchantPersonRepository.CreateMerchantPerson(merchantPerson);
+
+            _unitOfWork.Commit();
+
+            createMerchantPersonResponseDTO = merchantPerson.Adapt<CreateMerchantPersonResponseDTO>();
+        }
+        catch
+        {
+            _unitOfWork.Rollback();
+        }
+
+        return createMerchantPersonResponseDTO;
     }
 }

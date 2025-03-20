@@ -1,19 +1,24 @@
 ﻿using Challenge.Domain.Interfaces;
 using Challenge.Infrastructure.Configurations;
+using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Options;
-using MySql.Data.MySqlClient;
 using System.Data;
 
 namespace Challenge.Infrastructure.Repositories;
 
 public class UnitOfWork : IUnitOfWork
 {
-    public MySqlConnection Connection { get; }
-    public MySqlTransaction? Transaction { get; private set; }
+    public SqlConnection Connection { get; }
+    
+    public SqlTransaction? Transaction { get; private set; }
+    
+    private readonly DatabaseSettings _databaseSettings;
 
     public UnitOfWork(IOptions<DatabaseSettings> databaseSettings)
     {
-        Connection = new MySqlConnection(databaseSettings.Value.DefaultConnection);
+        _databaseSettings = databaseSettings.Value;
+
+        Connection = new SqlConnection(_databaseSettings.DefaultConnection);
     }
 
     public void BeginTransaction()

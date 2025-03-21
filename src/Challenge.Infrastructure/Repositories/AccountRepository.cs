@@ -36,7 +36,36 @@ public class AccountRepository : IAccountRepository
                 Balance = reader.GetDecimal("Balance"),
                 Person = new()
                 {
-                    Id = Guid.Parse(reader.GetString("PersonId")),
+                    Id = reader.GetGuid("PersonId")
+                }
+            };
+        }
+
+        return null;
+    }
+
+    public Account? GetAccountByPersonId(Guid personId)
+    {
+        using SqlCommand command = _unitOfWork.Connection.CreateCommand();
+
+        command.Transaction = _unitOfWork.Transaction;
+        command.CommandType = CommandType.StoredProcedure;
+        command.CommandText = "GetAccountByPersonId";
+
+        command.Parameters.Add(new SqlParameter("@personId", personId));
+
+        using SqlDataReader reader = command.ExecuteReader();
+
+        if (reader.Read())
+        {
+            return new Account
+            {
+                Id = reader.GetGuid("AccountId"),
+                AccountNumber = reader.GetString("AccountNumber"),
+                Balance = reader.GetDecimal("Balance"),
+                Person = new()
+                {
+                    Id = reader.GetGuid("PersonId")
                 }
             };
         }
@@ -62,5 +91,19 @@ public class AccountRepository : IAccountRepository
             account.Id = Guid.Parse(result.ToString()!);
 
         return account;
+    }
+
+    public void UpdateAccountBalance(Account account)
+    {
+        using SqlCommand command = _unitOfWork.Connection.CreateCommand();
+
+        command.Transaction = _unitOfWork.Transaction;
+        command.CommandType = CommandType.StoredProcedure;
+        command.CommandText = "UpdateAccountBalance";
+
+        command.Parameters.Add(new SqlParameter("@accountId", account.Id));
+        command.Parameters.Add(new SqlParameter("@balance", account.Balance));
+
+        command.ExecuteScalar();
     }
 }

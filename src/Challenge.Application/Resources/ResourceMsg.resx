@@ -117,8 +117,17 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Account.Exists" xml:space="preserve">
+  <data name="Account.AccountNumber.Exists" xml:space="preserve">
     <value>AccountNumber já existente</value>
+  </data>
+  <data name="Account.InsufficientFunds" xml:space="preserve">
+    <value>O pagador não possui fundos suficientes para a transação</value>
+  </data>
+  <data name="Account.NotFound" xml:space="preserve">
+    <value>Conta não encontrada para PersonId: {0}</value>
+  </data>
+  <data name="Account.Person.Exists" xml:space="preserve">
+    <value>Já existe conta criada para o PersonId: {0}</value>
   </data>
   <data name="Person.NotFound" xml:space="preserve">
     <value>Person não encontrada para Id: {0}</value>

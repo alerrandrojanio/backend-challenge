@@ -35,6 +35,10 @@ public class AccountController : ControllerBase
     [HttpPost("transfer")]
     public async Task<ActionResult> CreateTransfer([FromBody] CreateTransferModel createTransferModel)
     {
+        CreateTransferDTO createTransferDTO = createTransferModel.Adapt<CreateTransferDTO>();
+
+        CreateTransferResponseDTO? createTransferResponseDTO = _accountService.CreateTransfer(createTransferDTO);
+
         return Ok();
     }
 }

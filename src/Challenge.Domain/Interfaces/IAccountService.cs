@@ -6,4 +6,6 @@ namespace Challenge.Domain.Interfaces;
 public interface IAccountService
 {
     CreateAccountResponseDTO? CreateAccount(CreateAccountDTO createAccountDTO);
+
+    CreateTransferResponseDTO? CreateTransfer(CreateTransferDTO createTransferDTO);
 }

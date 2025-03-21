@@ -21,6 +21,7 @@ public static class PipelineExtensions
         services.AddScoped<IIndividualPersonRepository, IndividualPersonRepository>();
         services.AddScoped<IMerchantPersonRepository, MerchantPersonRepository>();
         services.AddScoped<IAccountRepository, AccountRepository>();
+        services.AddScoped<ITransferRepository, TransferRepository>();
     }
 
     public static void ConfigureSettings(this IServiceCollection services, IConfiguration configuration)

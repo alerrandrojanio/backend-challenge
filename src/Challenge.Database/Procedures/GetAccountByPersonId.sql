@@ -1,20 +1,20 @@
 USE [challenge]
 GO
 
-CREATE OR ALTER PROCEDURE [GetAccountByAccountNumber]
-    @accountNumber VARCHAR(20)
+CREATE OR ALTER PROCEDURE [GetAccountByPersonId]
+    @personId UNIQUEIDENTIFIER
 AS
 BEGIN
     SELECT 
         [AccountId],
-        [PersonId]
+        [PersonId],
         [AccountNumber],
         [Balance],
         [CreatedAt]
     FROM 
         [Account]
     WHERE 
-        [AccountNumber] = @AccountNumber
+        [PersonId] = @personId
     OPTION (MAXDOP 1)
 END
 GO

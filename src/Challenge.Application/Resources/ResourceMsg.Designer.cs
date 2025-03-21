@@ -63,9 +63,36 @@ namespace Challenge.Application.Resources {
         /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a AccountNumber já existente.
         /// </summary>
-        internal static string Account_Exists {
+        internal static string Account_AccountNumber_Exists {
             get {
-                return ResourceManager.GetString("Account.Exists", resourceCulture);
+                return ResourceManager.GetString("Account.AccountNumber.Exists", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a O pagador não possui fundos suficientes para a transação.
+        /// </summary>
+        internal static string Account_InsufficientFunds {
+            get {
+                return ResourceManager.GetString("Account.InsufficientFunds", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Conta não encontrada para PersonId: {0}.
+        /// </summary>
+        internal static string Account_NotFound {
+            get {
+                return ResourceManager.GetString("Account.NotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Já existe conta criada para o PersonId: {0}.
+        /// </summary>
+        internal static string Account_Person_Exists {
+            get {
+                return ResourceManager.GetString("Account.Person.Exists", resourceCulture);
             }
         }
         

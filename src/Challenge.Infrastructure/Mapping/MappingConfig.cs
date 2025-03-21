@@ -49,5 +49,15 @@ public static class MappingConfig
            .Map(dest => dest.AccountNumber, src => src.AccountNumber)
            .Map(dest => dest.Balance, src => src.Balance);
         #endregion CreateAccount
+
+        #region CreateTransfer
+
+        TypeAdapterConfig<Transfer, CreateTransferResponseDTO>.NewConfig()
+           .Map(dest => dest.TransferId, src => src.Id)
+           .Map(dest => dest.Value, src => src.Value)
+           .Map(dest => dest.PayerId, src => src.PayerId)
+           .Map(dest => dest.PayeeId, src => src.PayeeId)
+           .Map(dest => dest.CreatedAt, src => src.CreatedAt);
+        #endregion CreateTransfer
     }
 }

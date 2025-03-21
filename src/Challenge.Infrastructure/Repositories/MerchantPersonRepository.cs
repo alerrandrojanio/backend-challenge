@@ -22,7 +22,7 @@ public class MerchantPersonRepository : IMerchantPersonRepository
         command.CommandType = CommandType.StoredProcedure;
         command.CommandText = "CreateMerchantPerson";
 
-        command.Parameters.Add(new SqlParameter("@personId", merchantPerson.Person.Id));
+        command.Parameters.Add(new SqlParameter("@personId", merchantPerson.Person?.Id));
         command.Parameters.Add(new SqlParameter("@cnpj", merchantPerson.CNPJ));
         command.Parameters.Add(new SqlParameter("@merchantName", merchantPerson.MerchantName));
         command.Parameters.Add(new SqlParameter("@merchantAddress", merchantPerson.MerchantAddress));
@@ -31,7 +31,7 @@ public class MerchantPersonRepository : IMerchantPersonRepository
         var result = command.ExecuteScalar();
 
         if (result is not null)
-            merchantPerson.Id = Guid.Parse(result.ToString());
+            merchantPerson.Id = Guid.Parse(result.ToString()!);
 
         return merchantPerson;
     }

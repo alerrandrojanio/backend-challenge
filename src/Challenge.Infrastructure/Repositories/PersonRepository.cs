@@ -56,7 +56,7 @@ public class PersonRepository : IPersonRepository
        var result = command.ExecuteScalar();
 
         if (result is not null)
-            person.Id = Guid.Parse(result.ToString());
+            person.Id = Guid.Parse(result.ToString()!);
 
         return person;
     }

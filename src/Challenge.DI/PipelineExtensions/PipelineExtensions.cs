@@ -2,8 +2,10 @@
 using Challenge.Domain.Interfaces;
 using Challenge.Infrastructure.Configurations;
 using Challenge.Infrastructure.Repositories;
+using FluentValidation;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using System.Reflection;
 
 namespace Challenge.DI.PipelineExtensions;
 
@@ -27,5 +29,25 @@ public static class PipelineExtensions
         {
             options.DefaultConnection = configuration.GetConnectionString("DefaultConnection") ?? string.Empty;
         });
+    }
+
+    public static IServiceCollection AddFluentValidators(this IServiceCollection services, Assembly assembly)
+    {
+        var validatorTypes = assembly.GetTypes()
+            .Where(t => !t.IsAbstract && !t.IsInterface && typeof(IValidator).IsAssignableFrom(t));
+
+        foreach (var validatorType in validatorTypes)
+        {
+            var entityType = validatorType.BaseType?.GetGenericArguments().FirstOrDefault();
+            
+            if (entityType != null)
+            {
+                var serviceType = typeof(IValidator<>).MakeGenericType(entityType);
+                
+                services.AddScoped(serviceType, validatorType);
+            }
+        }
+
+        return services;
     }
 }

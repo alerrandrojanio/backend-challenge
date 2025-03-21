@@ -18,8 +18,8 @@ public static class MappingConfig
            .Map(dest => dest.BirthDate, src => src.createIndividualPersonDTO.BirthDate);
 
         TypeAdapterConfig<IndividualPerson, CreateIndividualPersonResponseDTO>.NewConfig()
-           .Map(dest => dest.PersonId, src => src.Person.Id)
-           .Map(dest => dest.Name, src => src.Person.Name)
+           .Map(dest => dest.PersonId, src => src.Person!.Id)
+           .Map(dest => dest.Name, src => src.Person!.Name)
            .Map(dest => dest.CPF, src => src.CPF);
         #endregion CreateIndividualPerson
 
@@ -32,8 +32,8 @@ public static class MappingConfig
            .Map(dest => dest.MerchantContact, src => src.createMerchantPersonDTO.MerchantContact);
 
         TypeAdapterConfig<MerchantPerson, CreateMerchantPersonResponseDTO>.NewConfig()
-           .Map(dest => dest.PersonId, src => src.Person.Id)
-           .Map(dest => dest.Name, src => src.Person.Name)
+           .Map(dest => dest.PersonId, src => src.Person!.Id)
+           .Map(dest => dest.Name, src => src.Person!.Name)
            .Map(dest => dest.CNPJ, src => src.CNPJ)
            .Map(dest => dest.MerchantName, src => src.MerchantName);
         #endregion CreateMerchantPerson
@@ -45,7 +45,7 @@ public static class MappingConfig
            .Map(dest => dest.Balance, src => src.createAccountDTO.Balance);
 
         TypeAdapterConfig<Account, CreateAccountResponseDTO>.NewConfig()
-           .Map(dest => dest.PersonId, src => src.Person.Id)
+           .Map(dest => dest.PersonId, src => src.Person!.Id)
            .Map(dest => dest.AccountNumber, src => src.AccountNumber)
            .Map(dest => dest.Balance, src => src.Balance);
         #endregion CreateAccount

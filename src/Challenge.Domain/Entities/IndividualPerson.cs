@@ -4,7 +4,7 @@ namespace Challenge.Domain.Entities;
 
 public class IndividualPerson : BaseEntity
 {
-    public Person Person { get; set; }
+    public Person? Person { get; set; }
 
     public string CPF { get; set; } = string.Empty;
 

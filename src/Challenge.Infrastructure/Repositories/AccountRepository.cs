@@ -52,14 +52,14 @@ public class AccountRepository : IAccountRepository
         command.CommandType = CommandType.StoredProcedure;
         command.CommandText = "CreateAccount";
 
-        command.Parameters.Add(new SqlParameter("@personId", account.Person.Id));
+        command.Parameters.Add(new SqlParameter("@personId", account.Person?.Id));
         command.Parameters.Add(new SqlParameter("@accountNumber", account.AccountNumber));
         command.Parameters.Add(new SqlParameter("@balance", account.Balance));
 
         var result = command.ExecuteScalar();
 
         if (result is not null)
-            account.Id = Guid.Parse(result.ToString());
+            account.Id = Guid.Parse(result.ToString()!);
 
         return account;
     }

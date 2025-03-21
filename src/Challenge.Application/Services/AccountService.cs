@@ -1,4 +1,4 @@
-﻿using Challenge.Application.Language;
+﻿using Challenge.Application.Resources;
 using Challenge.Domain.DTOs.Account;
 using Challenge.Domain.DTOs.Account.Response;
 using Challenge.Domain.Entities;

@@ -8,7 +8,8 @@ using Microsoft.AspNetCore.Mvc;
 namespace Challenge.API.Controllers;
 
 [ApiController]
-[Route("api/person")]
+[ApiVersion("1.0")]
+[Route("api/v{version:apiVersion}/person")]
 public class PersonController : ControllerBase
 {
     private readonly IPersonService _personService;
@@ -18,7 +19,7 @@ public class PersonController : ControllerBase
         _personService = personService;
     }
 
-    [HttpPost("/individual")]
+    [HttpPost("individual")]
     public async Task<ActionResult> CreateIndividualPerson([FromBody] CreateIndividualPersonModel createIndividualPersonModel)
     {
         CreateIndividualPersonDTO createIndividualPersonDTO = createIndividualPersonModel.Adapt<CreateIndividualPersonDTO>();
@@ -31,7 +32,7 @@ public class PersonController : ControllerBase
         return Ok(createIndividualPersonResponseDTO);
     }
 
-    [HttpPost("/merchant")]
+    [HttpPost("merchant")]
     public async Task<ActionResult> CreateMerchantPerson([FromBody] CreateMerchantPersonModel createMerchantPersonModel)
     {
         CreateMerchantPersonDTO createMerchantPersonDTO = createMerchantPersonModel.Adapt<CreateMerchantPersonDTO>();

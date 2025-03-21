@@ -8,7 +8,8 @@ using Microsoft.AspNetCore.Mvc;
 namespace Challenge.API.Controllers;
 
 [ApiController]
-[Route("api/account")]
+[ApiVersion("1.0")]
+[Route("api/v{version:apiVersion}/account")]
 public class AccountController : ControllerBase
 {
     private readonly IAccountService _accountService;
@@ -31,7 +32,7 @@ public class AccountController : ControllerBase
         return Ok(createAccountResponseDTO);
     }
 
-    [HttpPost("/transfer")]
+    [HttpPost("transfer")]
     public async Task<ActionResult> CreateTransfer([FromBody] CreateTransferModel createTransferModel)
     {
         return Ok();

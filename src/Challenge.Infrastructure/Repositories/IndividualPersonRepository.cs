@@ -22,14 +22,14 @@ public class IndividualPersonRepository : IIndividualPersonRepository
         command.CommandType = CommandType.StoredProcedure;
         command.CommandText = "CreateIndividualPerson";
 
-        command.Parameters.Add(new SqlParameter("@personId", individualPerson.Person.Id));
+        command.Parameters.Add(new SqlParameter("@personId", individualPerson.Person?.Id));
         command.Parameters.Add(new SqlParameter("@cpf", individualPerson.CPF));
         command.Parameters.Add(new SqlParameter("@birthDate", individualPerson.BirthDate));
 
         var result = command.ExecuteScalar();
 
         if (result is not null)
-            individualPerson.Id = Guid.Parse(result.ToString());
+            individualPerson.Id = Guid.Parse(result.ToString()!);
 
         return individualPerson;
     }

@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Challenge.Application.Language {
+namespace Challenge.Application.Resources {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace Challenge.Application.Language {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Challenge.Application.Language.ResourceMsg", typeof(ResourceMsg).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Challenge.Application.Resources.ResourceMsg", typeof(ResourceMsg).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;

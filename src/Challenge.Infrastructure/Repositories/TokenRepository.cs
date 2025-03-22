@@ -34,4 +34,32 @@ public class TokenRepository : ITokenRepository
 
         return token;
     }
+
+    public Token? GetLatestValidTokenByUserId(Guid userId)
+    {
+        using SqlCommand command = _unitOfWork.Connection.CreateCommand();
+
+        command.CommandType = CommandType.StoredProcedure;
+        command.CommandText = "GetLatestValidTokenByUserId";
+
+        command.Parameters.Add(new SqlParameter("@userId", userId));
+
+        using SqlDataReader reader = command.ExecuteReader();
+
+        if (reader.Read())
+        {
+            return new Token
+            {
+                Id = reader.GetGuid("TokenId"),
+                UserToken = reader.GetString("Token"),
+                Expiration = reader.GetDateTime("Expiration"),
+                User = new()
+                {
+                    Id = reader.GetGuid("UserId")
+                }
+            };
+        }
+
+        return null;
+    }
 }

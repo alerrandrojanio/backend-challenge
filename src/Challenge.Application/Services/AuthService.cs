@@ -38,6 +38,11 @@ public class AuthService : IAuthService
         {
             _userService.ValidateUser(createTokenDTO.UserId, createTokenDTO.Password);
 
+            Token? token = _tokenRepository.GetLatestValidTokenByUserId(createTokenDTO.UserId);
+
+            if (token is not null)
+                return createTokenResponseDTO = token.Adapt<CreateTokenResponseDTO>();
+
             DateTime expiration = DateTime.UtcNow.AddHours(1); 
 
             var claims = new[]
@@ -66,7 +71,7 @@ public class AuthService : IAuthService
             
             string jwtToken = tokenHandler.WriteToken(securityToken);
 
-            Token token = ValueTuple.Create(createTokenDTO, jwtToken, expiration).Adapt<Token>();
+            token = ValueTuple.Create(createTokenDTO, jwtToken, expiration).Adapt<Token>();
 
             _unitOfWork.BeginTransaction();
 

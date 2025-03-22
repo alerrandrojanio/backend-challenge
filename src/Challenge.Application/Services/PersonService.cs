@@ -51,13 +51,13 @@ public class PersonService : IPersonService
 
     public CreateMerchantPersonResponseDTO? CreateMerchantPerson(CreateMerchantPersonDTO createMerchantPersonDTO)
     {
-        CreateMerchantPersonResponseDTO createMerchantPersonResponseDTO = null!;
+        CreateMerchantPersonResponseDTO? createMerchantPersonResponseDTO = null;
 
         try
         {
-            _unitOfWork.BeginTransaction();
-
             Person person = createMerchantPersonDTO.Adapt<Person>();
+
+            _unitOfWork.BeginTransaction();
 
             person = _personRepository.CreatePerson(person);
 
@@ -65,9 +65,9 @@ public class PersonService : IPersonService
 
             _merchantPersonRepository.CreateMerchantPerson(merchantPerson);
 
-            _unitOfWork.Commit();
-
             createMerchantPersonResponseDTO = merchantPerson.Adapt<CreateMerchantPersonResponseDTO>();
+
+            _unitOfWork.Commit();
         }
         catch
         {

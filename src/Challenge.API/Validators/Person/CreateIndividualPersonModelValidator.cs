@@ -9,56 +9,56 @@ public class CreateIndividualPersonModelValidator : AbstractValidator<CreateIndi
     public CreateIndividualPersonModelValidator()
     {
         #region Name
-        RuleFor(user => user.Name)
+        RuleFor(person => person.Name)
             .NotEmpty()
             .NotNull()
-            .WithMessage(user => string.Format(ResourceMsg.Property_Empty, nameof(user.Name)));
+            .WithMessage(person => string.Format(ResourceMsg.Property_Empty, nameof(person.Name)));
 
-        RuleFor(user => user.Name)
+        RuleFor(person => person.Name)
             .MinimumLength(3)
-            .WithMessage(user => string.Format(ResourceMsg.Property_MinimumLength, nameof(user.Name), 3));
+            .WithMessage(person => string.Format(ResourceMsg.Property_MinimumLength, nameof(person.Name), 3));
         #endregion Name
 
         #region Email
-        RuleFor(user => user.Email)
+        RuleFor(person => person.Email)
             .NotEmpty()
             .NotNull()
-            .WithMessage(user => string.Format(ResourceMsg.Property_Empty, nameof(user.Email)));
+            .WithMessage(person => string.Format(ResourceMsg.Property_Empty, nameof(person.Email)));
 
-        RuleFor(user => user.Email)
+        RuleFor(person => person.Email)
             .Matches(@"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$")
-            .When(user => user.Email is not null)
+            .When(person => person.Email is not null)
             .WithMessage(ResourceMsg.Property_Email_Format);
         #endregion Email
 
         #region Phone
-        RuleFor(user => user.Phone)
+        RuleFor(person => person.Phone)
             .NotEmpty()
             .NotNull()
-            .WithMessage(user => string.Format(ResourceMsg.Property_Empty, nameof(user.Phone)));
+            .WithMessage(person => string.Format(ResourceMsg.Property_Empty, nameof(person.Phone)));
 
-        RuleFor(user => user.Phone)
+        RuleFor(person => person.Phone)
             .Matches(@"^(\(?\d{2}\)?\s?)?(\d{4,5})[-.\s]?\d{4}$")
-            .When(user => user.Phone is not null)
+            .When(person => person.Phone is not null)
             .WithMessage(ResourceMsg.Property_Phone_Format);
         #endregion Phone
 
         #region CPF
-        RuleFor(user => user.CPF)
+        RuleFor(person => person.CPF)
             .NotEmpty()
             .NotNull()
-            .WithMessage(user => string.Format(ResourceMsg.Property_Empty, nameof(user.CPF)));
+            .WithMessage(person => string.Format(ResourceMsg.Property_Empty, nameof(person.CPF)));
 
-        RuleFor(user => user.CPF)
+        RuleFor(person => person.CPF)
             .Length(11)
-            .WithMessage(user => string.Format(ResourceMsg.Property_Length, nameof(user.CPF), 11));
+            .WithMessage(person => string.Format(ResourceMsg.Property_Length, nameof(person.CPF), 11));
         #endregion CPF
 
         #region BirthDate
-        RuleFor(user => user.BirthDate)
+        RuleFor(person => person.BirthDate)
             .NotEmpty()
             .NotNull()
-            .WithMessage(user => string.Format(ResourceMsg.Property_Empty, nameof(user.BirthDate)));
+            .WithMessage(person => string.Format(ResourceMsg.Property_Empty, nameof(person.BirthDate)));
         #endregion BirthDate
     }
 }

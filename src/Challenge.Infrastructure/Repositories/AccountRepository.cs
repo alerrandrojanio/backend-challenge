@@ -19,7 +19,6 @@ public class AccountRepository : IAccountRepository
     {
         using SqlCommand command = _unitOfWork.Connection.CreateCommand();
 
-        command.Transaction = _unitOfWork.Transaction;
         command.CommandType = CommandType.StoredProcedure;
         command.CommandText = "GetAccountByAccountNumber";
 
@@ -48,7 +47,6 @@ public class AccountRepository : IAccountRepository
     {
         using SqlCommand command = _unitOfWork.Connection.CreateCommand();
 
-        command.Transaction = _unitOfWork.Transaction;
         command.CommandType = CommandType.StoredProcedure;
         command.CommandText = "GetAccountByPersonId";
 

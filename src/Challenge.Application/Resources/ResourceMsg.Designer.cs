@@ -104,5 +104,14 @@ namespace Challenge.Application.Resources {
                 return ResourceManager.GetString("Person.NotFound", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Usuário ou senha incorretos.
+        /// </summary>
+        internal static string User_Validade_Fail {
+            get {
+                return ResourceManager.GetString("User.Validade.Fail", resourceCulture);
+            }
+        }
     }
 }

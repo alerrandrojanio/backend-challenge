@@ -8,24 +8,31 @@ namespace Challenge.Infrastructure.Repositories;
 
 public class UnitOfWork : IUnitOfWork
 {
-    public SqlConnection Connection { get; }
-    
-    public SqlTransaction? Transaction { get; private set; }
-    
     private readonly DatabaseSettings _databaseSettings;
+    private SqlConnection? _connection;
+
+    public SqlConnection Connection
+    {
+        get
+        {
+            if (_connection == null)
+            {
+                _connection = new SqlConnection(_databaseSettings.DefaultConnection);
+                _connection.Open();
+            }
+            return _connection;
+        }
+    }
+
+    public SqlTransaction? Transaction { get; private set; }
 
     public UnitOfWork(IOptions<DatabaseSettings> databaseSettings)
     {
         _databaseSettings = databaseSettings.Value;
-
-        Connection = new SqlConnection(_databaseSettings.DefaultConnection);
     }
 
     public void BeginTransaction()
     {
-        if (Connection.State != ConnectionState.Open)
-            Connection.Open();
-
         Transaction = Connection.BeginTransaction();
     }
 
@@ -44,6 +51,6 @@ public class UnitOfWork : IUnitOfWork
     public void Dispose()
     {
         Transaction?.Dispose();
-        Connection.Dispose();
+        _connection?.Dispose();
     }
 }

@@ -19,7 +19,6 @@ public class PersonRepository : IPersonRepository
     {
         using SqlCommand command = _unitOfWork.Connection.CreateCommand();
 
-        command.Transaction = _unitOfWork.Transaction;
         command.CommandType = CommandType.StoredProcedure;
         command.CommandText = "GetPersonById";
 

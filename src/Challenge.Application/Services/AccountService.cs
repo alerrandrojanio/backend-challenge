@@ -26,18 +26,16 @@ public class AccountService : IAccountService
 
     public CreateAccountResponseDTO? CreateAccount(CreateAccountDTO createAccountDTO)
     {
-        CreateAccountResponseDTO createAccountResponseDTO = null!;
+        CreateAccountResponseDTO? createAccountResponseDTO = null;
 
         try
         {
-            _unitOfWork.BeginTransaction();
-
             Person? person = _personRepository.GetPersonById(createAccountDTO.PersonId);
 
             if (person is null)
                 throw new ServiceException(string.Format(ResourceMsg.Person_NotFound, createAccountDTO.PersonId), HttpStatusCode.BadRequest);
 
-            Account personHaveAccount = _accountRepository.GetAccountByPersonId(createAccountDTO.PersonId);
+            Account? personHaveAccount = _accountRepository.GetAccountByPersonId(createAccountDTO.PersonId);
 
             if (personHaveAccount is not null)
                 throw new ServiceException(ResourceMsg.Account_Person_Exists, HttpStatusCode.BadRequest);
@@ -48,6 +46,8 @@ public class AccountService : IAccountService
                 throw new ServiceException(ResourceMsg.Account_AccountNumber_Exists, HttpStatusCode.BadRequest);
 
             Account account = ValueTuple.Create(createAccountDTO, person).Adapt<Account>();
+
+            _unitOfWork.BeginTransaction();
 
             account = _accountRepository.CreateAccount(account);
 
@@ -65,7 +65,7 @@ public class AccountService : IAccountService
 
     public CreateTransferResponseDTO? CreateTransfer(CreateTransferDTO createTransferDTO)
     {
-        CreateTransferResponseDTO createTransferResponseDTO = null!;
+        CreateTransferResponseDTO? createTransferResponseDTO = null;
 
         try
         {
@@ -81,12 +81,12 @@ public class AccountService : IAccountService
             if (payee is null)
                 throw new ServiceException(string.Format(ResourceMsg.Person_NotFound, createTransferDTO.PayeeId), HttpStatusCode.BadRequest);
 
-            Account payerAccount = _accountRepository.GetAccountByPersonId(createTransferDTO.PayerId);
+            Account? payerAccount = _accountRepository.GetAccountByPersonId(createTransferDTO.PayerId);
 
             if (payerAccount is null)
                 throw new ServiceException(string.Format(ResourceMsg.Account_Person_Exists, createTransferDTO.PayerId), HttpStatusCode.BadRequest);
 
-            Account payeeAccount = _accountRepository.GetAccountByPersonId(createTransferDTO.PayeeId);
+            Account? payeeAccount = _accountRepository.GetAccountByPersonId(createTransferDTO.PayeeId);
 
             if (payeeAccount is null)
                 throw new ServiceException(string.Format(ResourceMsg.Account_NotFound, createTransferDTO.PayeeId), HttpStatusCode.BadRequest);

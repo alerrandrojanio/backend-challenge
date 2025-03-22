@@ -6,4 +6,9 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Folder Include="Procedures\Token\" />
+    <Folder Include="Procedures\User\" />
+  </ItemGroup>
+
 </Project>

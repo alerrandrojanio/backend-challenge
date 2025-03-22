@@ -1,8 +1,10 @@
 ﻿using Challenge.Application.Services;
+using Challenge.Domain.Entities;
 using Challenge.Domain.Interfaces;
 using Challenge.Infrastructure.Configurations;
 using Challenge.Infrastructure.Repositories;
 using FluentValidation;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
@@ -15,6 +17,8 @@ public static class PipelineExtensions
     {
         services.AddScoped<IPersonService, PersonService>();
         services.AddScoped<IAccountService, AccountService>();
+        services.AddScoped<IAuthService, AuthService>();
+        services.AddScoped<IUserService, UserService>();
 
         services.AddScoped<IUnitOfWork, UnitOfWork>();
         services.AddScoped<IPersonRepository, PersonRepository>();
@@ -22,6 +26,10 @@ public static class PipelineExtensions
         services.AddScoped<IMerchantPersonRepository, MerchantPersonRepository>();
         services.AddScoped<IAccountRepository, AccountRepository>();
         services.AddScoped<ITransferRepository, TransferRepository>();
+        services.AddScoped<IUserRepository, UserRepository>();
+        services.AddScoped<ITokenRepository, TokenRepository>();
+
+        services.AddScoped<PasswordHasher<User>>();
     }
 
     public static void ConfigureSettings(this IServiceCollection services, IConfiguration configuration)
@@ -30,6 +38,8 @@ public static class PipelineExtensions
         {
             options.DefaultConnection = configuration.GetConnectionString("DefaultConnection") ?? string.Empty;
         });
+
+        services.Configure<AuthSettings>(configuration.GetSection(nameof(AuthSettings)));
     }
 
     public static IServiceCollection AddFluentValidators(this IServiceCollection services, Assembly assembly)

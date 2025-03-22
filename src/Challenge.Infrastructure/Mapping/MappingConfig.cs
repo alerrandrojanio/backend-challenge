@@ -1,7 +1,11 @@
 ﻿using Challenge.Domain.DTOs.Account;
 using Challenge.Domain.DTOs.Account.Response;
+using Challenge.Domain.DTOs.Auth;
+using Challenge.Domain.DTOs.Auth.Response;
 using Challenge.Domain.DTOs.Person;
 using Challenge.Domain.DTOs.Person.Response;
+using Challenge.Domain.DTOs.User;
+using Challenge.Domain.DTOs.User.Response;
 using Challenge.Domain.Entities;
 using Mapster;
 
@@ -51,7 +55,6 @@ public static class MappingConfig
         #endregion CreateAccount
 
         #region CreateTransfer
-
         TypeAdapterConfig<Transfer, CreateTransferResponseDTO>.NewConfig()
            .Map(dest => dest.TransferId, src => src.Id)
            .Map(dest => dest.Value, src => src.Value)
@@ -59,5 +62,27 @@ public static class MappingConfig
            .Map(dest => dest.PayeeId, src => src.PayeeId)
            .Map(dest => dest.CreatedAt, src => src.CreatedAt);
         #endregion CreateTransfer
+
+        #region CreateUser
+        TypeAdapterConfig<(CreateUserDTO createUserDTO, string passwordHash), User>.NewConfig()
+           .Map(dest => dest.Name, src => src.createUserDTO.Name)
+           .Map(dest => dest.Email, src => src.createUserDTO.Email)
+           .Map(dest => dest.PasswordHash, src => src.passwordHash);
+
+        TypeAdapterConfig<User, CreateUserResponseDTO>.NewConfig()
+           .Map(dest => dest.UserId, src => src.Id)
+           .Map(dest => dest.Name, src => src.Name);
+        #endregion CreateUser
+
+        #region CreateToken
+        TypeAdapterConfig<(CreateTokenDTO createTokenDTO, string token, DateTime expiration), Token>.NewConfig()
+           .Map(dest => dest.UserToken, src => src.token)
+           .Map(dest => dest.Expiration, src => src.expiration)
+           .Map(dest => dest.User!.Id, src => src.createTokenDTO.UserId);
+
+        TypeAdapterConfig<Token, CreateTokenResponseDTO>.NewConfig()
+           .Map(dest => dest.Token, src => src.UserToken)
+           .Map(dest => dest.Expiration, src => src.Expiration);
+        #endregion CreateToken
     }
 }

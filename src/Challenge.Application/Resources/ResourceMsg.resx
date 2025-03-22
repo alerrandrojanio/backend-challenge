@@ -132,4 +132,7 @@
   <data name="Person.NotFound" xml:space="preserve">
     <value>Person não encontrada para Id: {0}</value>
   </data>
+  <data name="User.Validade.Fail" xml:space="preserve">
+    <value>Usuário ou senha incorretos</value>
+  </data>
 </root>

@@ -49,4 +49,6 @@ app.MapControllers();
 
 app.UseMiddleware<AuthorizationMiddleware>();
 
+app.UseMiddleware<GlobalErrorHandlerMiddleware>();
+
 app.Run();

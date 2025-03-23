@@ -150,4 +150,7 @@
   <data name="Property.GreaterThan" xml:space="preserve">
     <value>O valor da propriedade {0} deve ser maior que {1}</value>
   </data>
+  <data name="Error.GenericError" xml:space="preserve">
+    <value>Ocorreu um erro interno, tente novamente mais tarde</value>
+  </data>
 </root>

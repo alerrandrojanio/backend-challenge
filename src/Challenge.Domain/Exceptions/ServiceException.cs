@@ -4,17 +4,17 @@ namespace Challenge.Domain.Exceptions;
 
 public class ServiceException : Exception
 {
-    public int ErrorCode { get; }
+    public HttpStatusCode StatusCode { get; }
 
-    public ServiceException(string message, HttpStatusCode errorCode)
+    public ServiceException(string message, HttpStatusCode statusCode)
         : base(message)
     {
-        ErrorCode = (int)errorCode;
+        StatusCode = statusCode;
     }
 
-    public ServiceException(string message, Exception innerException, HttpStatusCode errorCode)
+    public ServiceException(string message, Exception innerException, HttpStatusCode statusCode)
         : base(message, innerException)
     {
-        ErrorCode = (int)errorCode;
+        StatusCode = statusCode;
     }
 }

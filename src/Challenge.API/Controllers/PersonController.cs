@@ -4,7 +4,6 @@ using Challenge.Domain.DTOs.Person.Response;
 using Challenge.Domain.Interfaces;
 using Mapster;
 using Microsoft.AspNetCore.Mvc;
-using static Challenge.API.Middlewares.AuthorizationMiddleware;
 
 namespace Challenge.API.Controllers;
 

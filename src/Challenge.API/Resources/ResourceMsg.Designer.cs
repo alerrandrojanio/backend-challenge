@@ -88,6 +88,15 @@ namespace Challenge.API.Resources {
         }
         
         /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Ocorreu um erro interno, tente novamente mais tarde.
+        /// </summary>
+        internal static string Error_GenericError {
+            get {
+                return ResourceManager.GetString("Error.GenericError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a A propriedade Email está fora do padrão correto.
         /// </summary>
         internal static string Property_Email_Format {

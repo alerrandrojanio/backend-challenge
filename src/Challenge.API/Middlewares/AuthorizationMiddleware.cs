@@ -79,9 +79,9 @@ public class AuthorizationMiddleware
 
             using (var scope = _scopeFactory.CreateScope())
             {
-                var scopedUserService = scope.ServiceProvider.GetRequiredService<IUserService>();
+                var scopedUserRepository = scope.ServiceProvider.GetRequiredService<IUserRepository>();
 
-                User? user = scopedUserService.GetUserById(Guid.Parse(userId));
+                User? user = scopedUserRepository.GetUserById(Guid.Parse(userId));
 
                 if (user is null)
                     throw new ServiceException(ResourceMsg.Authorization_Token_Invalid, HttpStatusCode.Unauthorized);

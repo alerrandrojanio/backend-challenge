@@ -55,12 +55,36 @@ public class CreateMerchantPersonModelValidator : AbstractValidator<CreateMercha
         #endregion CPF
 
         #region MerchantName
+        RuleFor(person => person.MerchantName)
+            .NotEmpty()
+            .NotNull()
+            .WithMessage(person => string.Format(ResourceMsg.Property_Empty, nameof(person.MerchantName)));
+
+        RuleFor(person => person.Name)
+            .MinimumLength(3)
+            .WithMessage(person => string.Format(ResourceMsg.Property_MinimumLength, nameof(person.MerchantName), 3));
         #endregion MerchantName
 
         #region MerchantAddress
+        RuleFor(person => person.MerchantAddress)
+            .NotEmpty()
+            .NotNull()
+            .WithMessage(person => string.Format(ResourceMsg.Property_Empty, nameof(person.MerchantAddress)));
+
+        RuleFor(person => person.MerchantAddress)
+            .MinimumLength(3)
+            .WithMessage(person => string.Format(ResourceMsg.Property_MinimumLength, nameof(person.MerchantAddress), 3));
         #endregion MerchantAddress
 
         #region MerchantContact
+        RuleFor(person => person.MerchantContact)
+            .NotEmpty()
+            .NotNull()
+            .WithMessage(person => string.Format(ResourceMsg.Property_Empty, nameof(person.MerchantContact)));
+
+        RuleFor(person => person.MerchantContact)
+            .Matches(@"^(\(?\d{2}\)?\s?)?(\d{4,5})[-.\s]?\d{4}$")
+            .When(person => person.MerchantContact is not null);
         #endregion MerchantContact
     }
 }

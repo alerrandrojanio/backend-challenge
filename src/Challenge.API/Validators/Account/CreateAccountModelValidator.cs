@@ -1,0 +1,46 @@
+﻿using Challenge.API.Models.Account;
+using Challenge.API.Resources;
+using FluentValidation;
+
+namespace Challenge.API.Validators.Account;
+
+public class CreateAccountModelValidator : AbstractValidator<CreateAccountModel>
+{
+    public CreateAccountModelValidator()
+    {
+        #region PersonId
+        RuleFor(account => account.PersonId)
+            .NotEmpty()
+            .NotNull()
+            .WithMessage(account => string.Format(ResourceMsg.Property_Empty, nameof(account.PersonId)));
+
+        RuleFor(account => account.PersonId)
+           .Must(personId => Guid.TryParse(personId, out _))
+           .When(account => account.PersonId is not null)
+           .WithMessage(account => string.Format(ResourceMsg.Property_Invalid_Format, nameof(account.PersonId)));
+        #endregion PersonId
+
+        #region AccountNumber
+        RuleFor(account => account.AccountNumber)
+            .NotEmpty()
+            .NotNull()
+            .WithMessage(account => string.Format(ResourceMsg.Property_Empty, nameof(account.AccountNumber)));
+
+        RuleFor(account => account.AccountNumber)
+            .Matches(@"^\d{6}$ ")
+            .When(account => account.AccountNumber is not null)
+            .WithMessage(account => string.Format(ResourceMsg.Property_Empty, nameof(account.AccountNumber)));
+        #endregion AccountNumber
+
+        #region Balance
+        RuleFor(account => account.Balance)
+            .NotEmpty()
+            .NotNull()
+            .WithMessage(account => string.Format(ResourceMsg.Property_Empty, nameof(account.Balance)));
+
+        RuleFor(account => account.Balance)
+            .GreaterThanOrEqualTo(0)
+            .WithMessage(account => string.Format(ResourceMsg.Property_GreaterThanOrEqualTo, nameof(account.Balance), 0));
+        #endregion Balance
+    }
+}

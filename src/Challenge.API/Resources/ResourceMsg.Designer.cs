@@ -106,6 +106,33 @@ namespace Challenge.API.Resources {
         }
         
         /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a O valor da propriedade {0} deve ser maior que {1}.
+        /// </summary>
+        internal static string Property_GreaterThan {
+            get {
+                return ResourceManager.GetString("Property.GreaterThan", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a O valor da propriedade {0} deve ser maior ou igual a {1}.
+        /// </summary>
+        internal static string Property_GreaterThanOrEqualTo {
+            get {
+                return ResourceManager.GetString("Property.GreaterThanOrEqualTo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a O formato da propriedade {0} é inválido.
+        /// </summary>
+        internal static string Property_Invalid_Format {
+            get {
+                return ResourceManager.GetString("Property.Invalid.Format", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a A propriedade {0} deve tamanho exato de {1} caractere(s).
         /// </summary>
         internal static string Property_Length {

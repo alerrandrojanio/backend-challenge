@@ -141,4 +141,13 @@
   <data name="Authorization.Token.Missing" xml:space="preserve">
     <value>O Token não foi informado</value>
   </data>
+  <data name="Property.Invalid.Format" xml:space="preserve">
+    <value>O formato da propriedade {0} é inválido</value>
+  </data>
+  <data name="Property.GreaterThanOrEqualTo" xml:space="preserve">
+    <value>O valor da propriedade {0} deve ser maior ou igual a {1}</value>
+  </data>
+  <data name="Property.GreaterThan" xml:space="preserve">
+    <value>O valor da propriedade {0} deve ser maior que {1}</value>
+  </data>
 </root>

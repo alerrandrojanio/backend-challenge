@@ -75,13 +75,13 @@ public static class MappingConfig
         #endregion CreateUser
 
         #region CreateToken
-        TypeAdapterConfig<(CreateTokenDTO createTokenDTO, string token, DateTime expiration), Token>.NewConfig()
-           .Map(dest => dest.UserToken, src => src.token)
+        TypeAdapterConfig<(CreateUserTokenDTO createTokenDTO, string token, DateTime expiration), UserToken>.NewConfig()
+           .Map(dest => dest.Token, src => src.token)
            .Map(dest => dest.Expiration, src => src.expiration)
            .Map(dest => dest.User!.Id, src => src.createTokenDTO.UserId);
 
-        TypeAdapterConfig<Token, CreateTokenResponseDTO>.NewConfig()
-           .Map(dest => dest.Token, src => src.UserToken)
+        TypeAdapterConfig<UserToken, CreateUserTokenResponseDTO>.NewConfig()
+           .Map(dest => dest.Token, src => src.Token)
            .Map(dest => dest.Expiration, src => src.Expiration);
         #endregion CreateToken
     }

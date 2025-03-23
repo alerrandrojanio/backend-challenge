@@ -1,3 +1,4 @@
+using Challenge.API.Middlewares;
 using Challenge.DI.PipelineExtensions;
 using Challenge.Infrastructure.Mapping;
 using FluentValidation.AspNetCore;
@@ -45,5 +46,7 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.UseMiddleware<AuthorizationMiddleware>();
 
 app.Run();

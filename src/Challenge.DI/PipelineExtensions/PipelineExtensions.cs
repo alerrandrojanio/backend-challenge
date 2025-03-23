@@ -27,7 +27,7 @@ public static class PipelineExtensions
         services.AddScoped<IAccountRepository, AccountRepository>();
         services.AddScoped<ITransferRepository, TransferRepository>();
         services.AddScoped<IUserRepository, UserRepository>();
-        services.AddScoped<ITokenRepository, TokenRepository>();
+        services.AddScoped<IUserTokenRepository, UserTokenRepository>();
 
         services.AddScoped<PasswordHasher<User>>();
     }

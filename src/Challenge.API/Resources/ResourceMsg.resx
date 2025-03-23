@@ -132,4 +132,13 @@
   <data name="Property.Email.Format" xml:space="preserve">
     <value>A propriedade Email está fora do padrão correto</value>
   </data>
+  <data name="Authorization.Token.Invalid" xml:space="preserve">
+    <value>O Token é inválido</value>
+  </data>
+  <data name="Authorization.Token.Expired" xml:space="preserve">
+    <value>O Token está expirado</value>
+  </data>
+  <data name="Authorization.Token.Missing" xml:space="preserve">
+    <value>O Token não foi informado</value>
+  </data>
 </root>

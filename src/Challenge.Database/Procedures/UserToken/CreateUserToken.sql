@@ -1,24 +1,24 @@
 USE [challenge]
 GO
 
-CREATE OR ALTER PROCEDURE [CreateToken]
+CREATE OR ALTER PROCEDURE [CreateUserToken]
     @token VARCHAR(1200),
     @expiration DATETIME,
     @userId UNIQUEIDENTIFIER
 AS
 BEGIN
-	DECLARE @GeneratedId TABLE (TokenId UNIQUEIDENTIFIER);
+	DECLARE @GeneratedId TABLE (UserTokenId UNIQUEIDENTIFIER);
 
-    INSERT INTO [Token] 
+    INSERT INTO [UserToken] 
         ([Token],
         [Expiration],
         [UserId])
-	OUTPUT INSERTED.TokenId INTO @GeneratedId
+	OUTPUT INSERTED.UserTokenId INTO @GeneratedId
     VALUES 
         (@token,
         @expiration,
         @userId)
     
-    SELECT TokenId FROM @GeneratedId;
+    SELECT UserTokenId FROM @GeneratedId;
 END
 GO

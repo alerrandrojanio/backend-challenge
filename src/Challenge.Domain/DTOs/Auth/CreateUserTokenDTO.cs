@@ -1,6 +1,6 @@
 ﻿namespace Challenge.Domain.DTOs.Auth;
 
-public class CreateTokenDTO
+public class CreateUserTokenDTO
 {
     public Guid UserId { get; set; }
 

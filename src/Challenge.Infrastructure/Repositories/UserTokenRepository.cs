@@ -6,36 +6,36 @@ using System;
 
 namespace Challenge.Infrastructure.Repositories;
 
-public class TokenRepository : ITokenRepository
+public class UserTokenRepository : IUserTokenRepository
 {
     public readonly IUnitOfWork _unitOfWork;
 
-    public TokenRepository(IUnitOfWork unitOfWork)
+    public UserTokenRepository(IUnitOfWork unitOfWork)
     {
         _unitOfWork = unitOfWork;
     }
 
-    public Token CreateToken(Token token)
+    public UserToken CreateUserToken(UserToken userToken)
     {
         using SqlCommand command = _unitOfWork.Connection.CreateCommand();
 
         command.Transaction = _unitOfWork.Transaction;
         command.CommandType = CommandType.StoredProcedure;
-        command.CommandText = "CreateToken";
+        command.CommandText = "CreateUserToken";
 
-        command.Parameters.Add(new SqlParameter("@token", token.UserToken));
-        command.Parameters.Add(new SqlParameter("@expiration", token.Expiration));
-        command.Parameters.Add(new SqlParameter("@userId", token.User!.Id));
+        command.Parameters.Add(new SqlParameter("@token", userToken.Token));
+        command.Parameters.Add(new SqlParameter("@expiration", userToken.Expiration));
+        command.Parameters.Add(new SqlParameter("@userId", userToken.User!.Id));
 
         var result = command.ExecuteScalar();
 
         if (result is not null)
-            token.Id = Guid.Parse(result.ToString()!);
+            userToken.Id = Guid.Parse(result.ToString()!);
 
-        return token;
+        return userToken;
     }
 
-    public Token? GetLatestValidTokenByUserId(Guid userId)
+    public UserToken? GetLatestValidTokenByUserId(Guid userId)
     {
         using SqlCommand command = _unitOfWork.Connection.CreateCommand();
 
@@ -48,10 +48,10 @@ public class TokenRepository : ITokenRepository
 
         if (reader.Read())
         {
-            return new Token
+            return new UserToken
             {
-                Id = reader.GetGuid("TokenId"),
-                UserToken = reader.GetString("Token"),
+                Id = reader.GetGuid("UserTokenId"),
+                Token = reader.GetString("Token"),
                 Expiration = reader.GetDateTime("Expiration"),
                 User = new()
                 {

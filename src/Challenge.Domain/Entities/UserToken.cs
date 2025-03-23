@@ -2,9 +2,9 @@
 
 namespace Challenge.Domain.Entities;
 
-public class Token : BaseEntity
+public class UserToken : BaseEntity
 {
-    public string UserToken { get; set; } = string.Empty;
+    public string Token { get; set; } = string.Empty;
 
     public DateTime Expiration { get; set; }
 

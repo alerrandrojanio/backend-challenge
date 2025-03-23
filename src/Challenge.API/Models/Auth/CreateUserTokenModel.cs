@@ -1,6 +1,6 @@
 ﻿namespace Challenge.API.Models.Auth;
 
-public class CreateTokenModel
+public class CreateUserTokenModel
 {
     public string UserId { get; set; } = string.Empty;
 

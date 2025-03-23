@@ -1,6 +1,6 @@
 ﻿namespace Challenge.Domain.DTOs.Auth.Response;
 
-public class CreateTokenResponseDTO
+public class CreateUserTokenResponseDTO
 {
     public string Token { get; set; } = string.Empty;
 

@@ -20,15 +20,15 @@ public class AuthController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<ActionResult> CreateToken([FromBody] CreateTokenModel createTokenModel)
+    public async Task<ActionResult> CreateUserToken([FromBody] CreateUserTokenModel createUserTokenModel)
     {
-        CreateTokenDTO createTokenDTO = createTokenModel.Adapt<CreateTokenDTO>();
+        CreateUserTokenDTO createUserTokenDTO = createUserTokenModel.Adapt<CreateUserTokenDTO>();
 
-        CreateTokenResponseDTO? createTokenResponseDTO = _authService.CreateToken(createTokenDTO);
+        CreateUserTokenResponseDTO? createUserTokenResponseDTO = _authService.CreateUserToken(createUserTokenDTO);
 
-        if (createTokenResponseDTO is null)
+        if (createUserTokenResponseDTO is null)
             return BadRequest();
 
-        return Ok(createTokenResponseDTO);
+        return Ok(createUserTokenResponseDTO);
     }
 }

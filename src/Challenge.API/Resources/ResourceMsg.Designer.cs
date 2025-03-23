@@ -61,6 +61,33 @@ namespace Challenge.API.Resources {
         }
         
         /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a O Token está expirado.
+        /// </summary>
+        internal static string Authorization_Token_Expired {
+            get {
+                return ResourceManager.GetString("Authorization.Token.Expired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a O Token é inválido.
+        /// </summary>
+        internal static string Authorization_Token_Invalid {
+            get {
+                return ResourceManager.GetString("Authorization.Token.Invalid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a O Token não foi informado.
+        /// </summary>
+        internal static string Authorization_Token_Missing {
+            get {
+                return ResourceManager.GetString("Authorization.Token.Missing", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a A propriedade Email está fora do padrão correto.
         /// </summary>
         internal static string Property_Email_Format {

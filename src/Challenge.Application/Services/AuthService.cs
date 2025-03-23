@@ -17,12 +17,12 @@ namespace Challenge.Application.Services;
 
 public class AuthService : IAuthService
 {
-    private readonly ITokenRepository _tokenRepository;
+    private readonly IUserTokenRepository _tokenRepository;
     private readonly IUserService _userService;
     private readonly IUnitOfWork _unitOfWork;
     private readonly AuthSettings _authSettings;
 
-    public AuthService(ITokenRepository tokenRepository, IUserService userService, IUnitOfWork unitOfWork ,IOptions<AuthSettings> authSettings)
+    public AuthService(IUserTokenRepository tokenRepository, IUserService userService, IUnitOfWork unitOfWork ,IOptions<AuthSettings> authSettings)
     {
         _tokenRepository = tokenRepository;
         _userService = userService;
@@ -30,24 +30,24 @@ public class AuthService : IAuthService
         _authSettings = authSettings.Value;
     }
 
-    public CreateTokenResponseDTO? CreateToken(CreateTokenDTO createTokenDTO)
+    public CreateUserTokenResponseDTO? CreateUserToken(CreateUserTokenDTO createUserTokenDTO)
     {
-        CreateTokenResponseDTO? createTokenResponseDTO = null;
+        CreateUserTokenResponseDTO? createUserTokenResponseDTO = null;
         
         try
         {
-            _userService.ValidateUser(createTokenDTO.UserId, createTokenDTO.Password);
+            _userService.ValidateUser(createUserTokenDTO.UserId, createUserTokenDTO.Password);
 
-            Token? token = _tokenRepository.GetLatestValidTokenByUserId(createTokenDTO.UserId);
+            UserToken? token = _tokenRepository.GetLatestValidTokenByUserId(createUserTokenDTO.UserId);
 
             if (token is not null)
-                return createTokenResponseDTO = token.Adapt<CreateTokenResponseDTO>();
+                return createUserTokenResponseDTO = token.Adapt<CreateUserTokenResponseDTO>();
 
             DateTime expiration = DateTime.UtcNow.AddHours(1); 
 
             var claims = new[]
             {
-                new Claim(JwtRegisteredClaimNames.Sub, createTokenDTO.UserId.ToString()), 
+                new Claim(JwtRegisteredClaimNames.Sub, createUserTokenDTO.UserId.ToString()), 
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                 new Claim(JwtRegisteredClaimNames.Iat, DateTime.UtcNow.ToString(), ClaimValueTypes.DateTime) 
             };
@@ -71,13 +71,13 @@ public class AuthService : IAuthService
             
             string jwtToken = tokenHandler.WriteToken(securityToken);
 
-            token = ValueTuple.Create(createTokenDTO, jwtToken, expiration).Adapt<Token>();
+            token = ValueTuple.Create(createUserTokenDTO, jwtToken, expiration).Adapt<UserToken>();
 
             _unitOfWork.BeginTransaction();
 
-            token = _tokenRepository.CreateToken(token);
+            token = _tokenRepository.CreateUserToken(token);
 
-            createTokenResponseDTO = token.Adapt<CreateTokenResponseDTO>();
+            createUserTokenResponseDTO = token.Adapt<CreateUserTokenResponseDTO>();
 
             _unitOfWork.Commit();
         }
@@ -86,6 +86,6 @@ public class AuthService : IAuthService
             _unitOfWork.Rollback();
         }
 
-        return createTokenResponseDTO;
+        return createUserTokenResponseDTO;
     }
 }

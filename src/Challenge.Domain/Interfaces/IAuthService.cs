@@ -5,5 +5,5 @@ namespace Challenge.Domain.Interfaces;
 
 public interface IAuthService
 {
-    CreateTokenResponseDTO? CreateToken(CreateTokenDTO createTokenDTO);
+    CreateUserTokenResponseDTO? CreateUserToken(CreateUserTokenDTO createTokenDTO);
 }

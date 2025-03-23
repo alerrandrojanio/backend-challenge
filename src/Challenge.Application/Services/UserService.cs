@@ -49,6 +49,13 @@ public class UserService : IUserService
         return createUserResponseDTO;
     }
 
+    public User? GetUserById(Guid userId)
+    {
+        User? user = _userRepository.GetUserById(userId);
+
+        return user;
+    }
+
     public void ValidateUser(Guid userId, string password)
     {
         User? user = _userRepository.GetUserById(userId);

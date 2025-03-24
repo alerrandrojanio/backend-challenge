@@ -11,7 +11,6 @@ public class CreateUserModelValidator : AbstractValidator<CreateUserModel>
         #region Name
         RuleFor(user => user.Name)
             .NotEmpty()
-            .NotNull()
             .WithMessage(user => string.Format(ResourceMsg.Property_Empty, nameof(user.Name)));
 
         RuleFor(user => user.Name)
@@ -22,7 +21,6 @@ public class CreateUserModelValidator : AbstractValidator<CreateUserModel>
         #region Email
         RuleFor(person => person.Email)
             .NotEmpty()
-            .NotNull()
             .WithMessage(person => string.Format(ResourceMsg.Property_Empty, nameof(person.Email)));
 
         RuleFor(person => person.Email)
@@ -34,7 +32,6 @@ public class CreateUserModelValidator : AbstractValidator<CreateUserModel>
         #region Password
         RuleFor(user => user.Password)
            .NotEmpty()
-           .NotNull()
            .WithMessage(user => string.Format(ResourceMsg.Property_Empty, nameof(user.Password)));
 
         RuleFor(user => user.Password)

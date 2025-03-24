@@ -11,7 +11,6 @@ public class CreateIndividualPersonModelValidator : AbstractValidator<CreateIndi
         #region Name
         RuleFor(person => person.Name)
             .NotEmpty()
-            .NotNull()
             .WithMessage(person => string.Format(ResourceMsg.Property_Empty, nameof(person.Name)));
 
         RuleFor(person => person.Name)
@@ -22,7 +21,6 @@ public class CreateIndividualPersonModelValidator : AbstractValidator<CreateIndi
         #region Email
         RuleFor(person => person.Email)
             .NotEmpty()
-            .NotNull()
             .WithMessage(person => string.Format(ResourceMsg.Property_Empty, nameof(person.Email)));
 
         RuleFor(person => person.Email)
@@ -34,7 +32,6 @@ public class CreateIndividualPersonModelValidator : AbstractValidator<CreateIndi
         #region Phone
         RuleFor(person => person.Phone)
             .NotEmpty()
-            .NotNull()
             .WithMessage(person => string.Format(ResourceMsg.Property_Empty, nameof(person.Phone)));
 
         RuleFor(person => person.Phone)
@@ -46,7 +43,6 @@ public class CreateIndividualPersonModelValidator : AbstractValidator<CreateIndi
         #region CPF
         RuleFor(person => person.CPF)
             .NotEmpty()
-            .NotNull()
             .WithMessage(person => string.Format(ResourceMsg.Property_Empty, nameof(person.CPF)));
 
         RuleFor(person => person.CPF)
@@ -57,7 +53,6 @@ public class CreateIndividualPersonModelValidator : AbstractValidator<CreateIndi
         #region BirthDate
         RuleFor(person => person.BirthDate)
             .NotEmpty()
-            .NotNull()
             .WithMessage(person => string.Format(ResourceMsg.Property_Empty, nameof(person.BirthDate)));
         #endregion BirthDate
     }

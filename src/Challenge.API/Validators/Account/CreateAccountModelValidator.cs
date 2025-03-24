@@ -11,11 +11,10 @@ public class CreateAccountModelValidator : AbstractValidator<CreateAccountModel>
         #region PersonId
         RuleFor(account => account.PersonId)
             .NotEmpty()
-            .NotNull()
             .WithMessage(account => string.Format(ResourceMsg.Property_Empty, nameof(account.PersonId)));
 
         RuleFor(account => account.PersonId)
-           .Must(personId => Guid.TryParse(personId, out _))
+           .Matches(@"^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$")
            .When(account => account.PersonId is not null)
            .WithMessage(account => string.Format(ResourceMsg.Property_Invalid_Format, nameof(account.PersonId)));
         #endregion PersonId
@@ -23,7 +22,6 @@ public class CreateAccountModelValidator : AbstractValidator<CreateAccountModel>
         #region AccountNumber
         RuleFor(account => account.AccountNumber)
             .NotEmpty()
-            .NotNull()
             .WithMessage(account => string.Format(ResourceMsg.Property_Empty, nameof(account.AccountNumber)));
 
         RuleFor(account => account.AccountNumber)
@@ -35,7 +33,6 @@ public class CreateAccountModelValidator : AbstractValidator<CreateAccountModel>
         #region Balance
         RuleFor(account => account.Balance)
             .NotEmpty()
-            .NotNull()
             .WithMessage(account => string.Format(ResourceMsg.Property_Empty, nameof(account.Balance)));
 
         RuleFor(account => account.Balance)

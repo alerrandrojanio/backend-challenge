@@ -11,7 +11,6 @@ public class CreateMerchantPersonModelValidator : AbstractValidator<CreateMercha
         #region Name
         RuleFor(person => person.Name)
             .NotEmpty()
-            .NotNull()
             .WithMessage(person => string.Format(ResourceMsg.Property_Empty, nameof(person.Name)));
 
         RuleFor(person => person.Name)
@@ -22,7 +21,6 @@ public class CreateMerchantPersonModelValidator : AbstractValidator<CreateMercha
         #region Email
         RuleFor(person => person.Email)
             .NotEmpty()
-            .NotNull()
             .WithMessage(person => string.Format(ResourceMsg.Property_Empty, nameof(person.Email)));
 
         RuleFor(person => person.Email)
@@ -34,7 +32,6 @@ public class CreateMerchantPersonModelValidator : AbstractValidator<CreateMercha
         #region Phone
         RuleFor(person => person.Phone)
             .NotEmpty()
-            .NotNull()
             .WithMessage(person => string.Format(ResourceMsg.Property_Empty, nameof(person.Phone)));
 
         RuleFor(person => person.Phone)
@@ -46,7 +43,6 @@ public class CreateMerchantPersonModelValidator : AbstractValidator<CreateMercha
         #region CPF
         RuleFor(person => person.CNPJ)
             .NotEmpty()
-            .NotNull()
             .WithMessage(person => string.Format(ResourceMsg.Property_Empty, nameof(person.CNPJ)));
 
         RuleFor(person => person.CNPJ)
@@ -57,7 +53,6 @@ public class CreateMerchantPersonModelValidator : AbstractValidator<CreateMercha
         #region MerchantName
         RuleFor(person => person.MerchantName)
             .NotEmpty()
-            .NotNull()
             .WithMessage(person => string.Format(ResourceMsg.Property_Empty, nameof(person.MerchantName)));
 
         RuleFor(person => person.Name)
@@ -68,7 +63,6 @@ public class CreateMerchantPersonModelValidator : AbstractValidator<CreateMercha
         #region MerchantAddress
         RuleFor(person => person.MerchantAddress)
             .NotEmpty()
-            .NotNull()
             .WithMessage(person => string.Format(ResourceMsg.Property_Empty, nameof(person.MerchantAddress)));
 
         RuleFor(person => person.MerchantAddress)
@@ -79,7 +73,6 @@ public class CreateMerchantPersonModelValidator : AbstractValidator<CreateMercha
         #region MerchantContact
         RuleFor(person => person.MerchantContact)
             .NotEmpty()
-            .NotNull()
             .WithMessage(person => string.Format(ResourceMsg.Property_Empty, nameof(person.MerchantContact)));
 
         RuleFor(person => person.MerchantContact)

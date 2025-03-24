@@ -11,11 +11,10 @@ public class CreateTransferModelValidator : AbstractValidator<CreateTransferMode
         #region PayerId
         RuleFor(account => account.PayerId)
             .NotEmpty()
-            .NotNull()
             .WithMessage(account => string.Format(ResourceMsg.Property_Empty, nameof(account.PayerId)));
 
         RuleFor(account => account.PayerId)
-           .Must(payerId => Guid.TryParse(payerId, out _))
+           .Matches(@"^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$")
            .When(account => account.PayerId is not null)
            .WithMessage(account => string.Format(ResourceMsg.Property_Invalid_Format, nameof(account.PayerId)));
         #endregion PayerId
@@ -23,11 +22,10 @@ public class CreateTransferModelValidator : AbstractValidator<CreateTransferMode
         #region PayeeId
         RuleFor(account => account.PayeeId)
             .NotEmpty()
-            .NotNull()
             .WithMessage(account => string.Format(ResourceMsg.Property_Empty, nameof(account.PayeeId)));
 
-        RuleFor(account => account.PayerId)
-           .Must(payeeId => Guid.TryParse(payeeId, out _))
+        RuleFor(account => account.PayeeId)
+           .Matches(@"^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$")
            .When(account => account.PayeeId is not null)
            .WithMessage(account => string.Format(ResourceMsg.Property_Invalid_Format, nameof(account.PayeeId)));
         #endregion PayeeId
@@ -35,7 +33,6 @@ public class CreateTransferModelValidator : AbstractValidator<CreateTransferMode
         #region Value
         RuleFor(account => account.Value)
             .NotEmpty()
-            .NotNull()
             .WithMessage(account => string.Format(ResourceMsg.Property_Empty, nameof(account.Value)));
 
         RuleFor(account => account.Value)

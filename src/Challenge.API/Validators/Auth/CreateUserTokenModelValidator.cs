@@ -11,11 +11,10 @@ public class CreateUserTokenModelValidator : AbstractValidator<CreateUserTokenMo
         #region UserId
         RuleFor(userToken => userToken.UserId)
             .NotEmpty()
-            .NotNull()
             .WithMessage(userToken => string.Format(ResourceMsg.Property_Empty, nameof(userToken.UserId)));
 
         RuleFor(userToken => userToken.UserId)
-           .Must(userId => Guid.TryParse(userId, out _))
+           .Matches(@"^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$")
            .When(userToken => userToken.UserId is not null)
            .WithMessage(userToken => string.Format(ResourceMsg.Property_Invalid_Format, nameof(userToken.UserId)));
         #endregion UserId
@@ -23,7 +22,6 @@ public class CreateUserTokenModelValidator : AbstractValidator<CreateUserTokenMo
         #region Password
         RuleFor(userToken => userToken.Password)
             .NotEmpty()
-            .NotNull()
             .WithMessage(userToken => string.Format(ResourceMsg.Property_Empty, nameof(userToken.Password)));
 
         RuleFor(userToken => userToken.Password)

@@ -27,9 +27,9 @@ public class CreateAccountModelValidator : AbstractValidator<CreateAccountModel>
             .WithMessage(account => string.Format(ResourceMsg.Property_Empty, nameof(account.AccountNumber)));
 
         RuleFor(account => account.AccountNumber)
-            .Matches(@"^\d{6}$ ")
+            .Matches(@"^\d{6}$")
             .When(account => account.AccountNumber is not null)
-            .WithMessage(account => string.Format(ResourceMsg.Property_Empty, nameof(account.AccountNumber)));
+            .WithMessage(account => string.Format(ResourceMsg.Property_Invalid_Format, nameof(account.AccountNumber)));
         #endregion AccountNumber
 
         #region Balance

@@ -40,15 +40,21 @@ public class CreateMerchantPersonModelValidator : AbstractValidator<CreateMercha
             .WithMessage(ResourceMsg.Property_Phone_Format);
         #endregion Phone
 
-        #region CPF
+        #region CNPJ
         RuleFor(person => person.CNPJ)
             .NotEmpty()
             .WithMessage(person => string.Format(ResourceMsg.Property_Empty, nameof(person.CNPJ)));
 
         RuleFor(person => person.CNPJ)
             .Length(14)
+            .When(person => person.CNPJ is not null)
             .WithMessage(person => string.Format(ResourceMsg.Property_Length, nameof(person.CNPJ), 14));
-        #endregion CPF
+
+        RuleFor(person => person.CNPJ)
+           .Matches(@"^\d+$")
+           .When(person => person.CNPJ is not null)
+           .WithMessage(person => string.Format(ResourceMsg.Property_OnlyDigits, nameof(person.CNPJ)));
+        #endregion CNPJ
 
         #region MerchantName
         RuleFor(person => person.MerchantName)

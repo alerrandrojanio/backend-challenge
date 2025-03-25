@@ -32,7 +32,7 @@ public class CreateUserModelValidatorTests
     }
 
     [Test]
-    public void CreateUser_WhenModelIsValid_ThenNotReturnsErrors()
+    public void CreateUser_WhenModelIsValid_ThenShouldNotReturnAError()
     {
         // Act
         ValidationResult result = _validator.Validate(_model);
@@ -43,7 +43,7 @@ public class CreateUserModelValidatorTests
 
     #region Name
     [Test]
-    public void CreateUser_WhenNameIsNull_ThenReturnsAError()
+    public void CreateUser_WhenNameIsNull_ThenShouldReturnAError()
     {
         // Arrange
         string errorMessage = "A propriedade Name é obrigatória";
@@ -61,7 +61,7 @@ public class CreateUserModelValidatorTests
     [TestCase(" ")]
     [TestCase("a")]
     [TestCase("ab")]
-    public void CreateUser_WhenNameLengthIsLessThanThree_ThenReturnsAError(string name)
+    public void CreateUser_WhenNameLengthIsLessThanThree_ThenShouldReturnAError(string name)
     {
         // Arrange
         string errorMessage = "A propriedade Name deve ter pelo menos 3 caractere(s)";
@@ -77,7 +77,7 @@ public class CreateUserModelValidatorTests
 
     #region Email
     [Test]
-    public void CreateUser_WhenEmailIsNull_ThenReturnsAError()
+    public void CreateUser_WhenEmailIsNull_ThenShouldReturnAError()
     {
         // Arrange
         string errorMessage = "A propriedade Email é obrigatória";
@@ -103,7 +103,7 @@ public class CreateUserModelValidatorTests
     [TestCase("user domain.com", Description = "Email sem @, espaço no lugar")]
     [TestCase("user@do_main.com", Description = "Email com caracter _ inválido no domínio")]
     [TestCase("usér@domain.com", Description = "Email com caracter especial inválido (acentuação)")]
-    public void CreateUser_WhenEmailIsNotValid_ThenReturnsAError(string email)
+    public void CreateUser_WhenEmailIsNotValid_ThenShouldReturnAError(string email)
     {
         // Arrange
         string errorMessage = "A propriedade Email está fora do padrão correto";
@@ -119,7 +119,7 @@ public class CreateUserModelValidatorTests
 
     #region Password
     [Test]
-    public void CreateUser_WhenPasswordIsNull_ThenReturnsAError()
+    public void CreateUser_WhenPasswordIsNull_ThenShouldReturnAError()
     {
         // Arrange
         string errorMessage = "A propriedade Password é obrigatória";
@@ -138,7 +138,7 @@ public class CreateUserModelValidatorTests
     [TestCase("a")]
     [TestCase("ab")]
     [TestCase("abcdefg")]
-    public void CreateUser_WhenPasswordLengthIsLessThanEight_ThenReturnsAError(string password)
+    public void CreateUser_WhenPasswordLengthIsLessThanEight_ThenShouldReturnAError(string password)
     {
         // Arrange
         string errorMessage = "A propriedade Password deve ter pelo menos 8 caractere(s)";

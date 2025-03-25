@@ -47,13 +47,29 @@ public class CreateIndividualPersonModelValidator : AbstractValidator<CreateIndi
 
         RuleFor(person => person.CPF)
             .Length(11)
+            .When(person => person.CPF is not null)
             .WithMessage(person => string.Format(ResourceMsg.Property_Length, nameof(person.CPF), 11));
+
+        RuleFor(person => person.CPF)
+            .Matches(@"^\d+$")
+            .When(person => person.CPF is not null)
+            .WithMessage(person => string.Format(ResourceMsg.Property_OnlyDigits, nameof(person.CPF)));
         #endregion CPF
 
         #region BirthDate
         RuleFor(person => person.BirthDate)
             .NotEmpty()
             .WithMessage(person => string.Format(ResourceMsg.Property_Empty, nameof(person.BirthDate)));
+
+        RuleFor(person => person.BirthDate)
+            .Must(birthDate => DateTime.TryParse(birthDate, out _))
+            .When(person => person.BirthDate is not null)
+            .WithMessage(ResourceMsg.Property_BirthDate_Invalid);
+
+        RuleFor(person => person.BirthDate)
+            .Must(birthDate => DateTime.TryParse(birthDate, out var date) && date <= DateTime.Today)
+            .When(person => person.BirthDate is not null && DateTime.TryParse(person.BirthDate, out _))
+            .WithMessage(ResourceMsg.Property_BirthDate_Future);
         #endregion BirthDate
     }
 }

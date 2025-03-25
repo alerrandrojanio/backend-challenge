@@ -32,7 +32,7 @@ public class CreateTransferModelValidatorTests
     }
 
     [Test]
-    public void CreateTransfer_WhenModelIsValid_ThenNotReturnsErrors()
+    public void CreateTransfer_WhenModelIsValid_ThenShouldNotReturnAError()
     {
         // Act
         ValidationResult result = _validator.Validate(_model);
@@ -43,7 +43,7 @@ public class CreateTransferModelValidatorTests
 
     #region PayerId
     [Test]
-    public void CreateTransfer_WhenPayerIdIsNull_ThenReturnsAError()
+    public void CreateTransfer_WhenPayerIdIsNull_ThenShouldReturnAError()
     {
         // Arrange
         string errorMessage = "A propriedade PayerId é obrigatória";
@@ -67,7 +67,7 @@ public class CreateTransferModelValidatorTests
     [TestCase("550e8400e29b41d4a716446655440000", Description = "PayerId sem os hífens obrigatórios")]
     [TestCase("{550e8400-e29b-41d4-a716-446655440000}", Description = "PayerId com colchetes inválidos")]
     [TestCase("550E8400-E29B-41D4-G716-446655440000", Description = "PayerId com um caractere fora do intervalo hexadecimal")]
-    public void CreateTransfer_WhenPayerIdIsNotValid_ThenReturnsAError(string payerId)
+    public void CreateTransfer_WhenPayerIdIsNotValid_ThenShouldReturnAError(string payerId)
     {
         // Arrange
         _model.PayerId = payerId;
@@ -83,7 +83,7 @@ public class CreateTransferModelValidatorTests
 
     #region PayeeId
     [Test]
-    public void CreateTransfer_WhenPayeeIdIsNull_ThenReturnsAError()
+    public void CreateTransfer_WhenPayeeIdIsNull_ThenShouldReturnAError()
     {
         // Arrange
         string errorMessage = "A propriedade PayeeId é obrigatória";
@@ -107,7 +107,7 @@ public class CreateTransferModelValidatorTests
     [TestCase("550e8400e29b41d4a716446655440000", Description = "PayeeId sem os hífens obrigatórios")]
     [TestCase("{550e8400-e29b-41d4-a716-446655440000}", Description = "PayeeId com colchetes inválidos")]
     [TestCase("550E8400-E29B-41D4-G716-446655440000", Description = "PayeeId com um caractere fora do intervalo hexadecimal")]
-    public void CreateTransfer_WhenPayeeIdIsNotValid_ThenReturnsAError(string payeeId)
+    public void CreateTransfer_WhenPayeeIdIsNotValid_ThenShouldReturnAError(string payeeId)
     {
         // Arrange
         _model.PayeeId = payeeId;

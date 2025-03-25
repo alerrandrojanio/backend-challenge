@@ -38,7 +38,7 @@ public class CreateDepositModelValidatorTests
     }
 
     [Test]
-    public void CreateDeposit_WhenModelIsValid_ThenNotReturnsErrors()
+    public void CreateDeposit_WhenModelIsValid_ThenShouldNotReturnAError()
     {
         // Act
         ValidationResult result = _validator.Validate(_model);
@@ -49,7 +49,7 @@ public class CreateDepositModelValidatorTests
 
     #region AccountNumber
     [Test]
-    public void CreateDeposit_WhenAccountNumberIsNull_ThenReturnsAError()
+    public void CreateDeposit_WhenAccountNumberIsNull_ThenShouldReturnAError()
     {
         // Arrange
         string errorMessage = "A propriedade AccountNumber é obrigatória";
@@ -69,7 +69,7 @@ public class CreateDepositModelValidatorTests
     [TestCase("1234567", Description = "AccountNumber com 7 números")]
     [TestCase("123456a", Description = "AccountNumber com letras")]
     [TestCase("123456@", Description = "AccountNumber com caracteres expeciais")]
-    public void CreateDeposit_WhenAccountNumberIsNotValid_ThenReturnsAError(string accountNumber)
+    public void CreateDeposit_WhenAccountNumberIsNotValid_ThenShouldReturnAError(string accountNumber)
     {
         // Arrange
         _model.AccountNumber = accountNumber;
@@ -85,7 +85,7 @@ public class CreateDepositModelValidatorTests
 
     #region PersonId
     [Test]
-    public void CreateDeposit_WhenPersonIdIsNull_ThenReturnsAError()
+    public void CreateDeposit_WhenPersonIdIsNull_ThenShouldReturnAError()
     {
         // Arrange
         string errorMessage = "A propriedade PersonId é obrigatória";
@@ -109,7 +109,7 @@ public class CreateDepositModelValidatorTests
     [TestCase("550e8400e29b41d4a716446655440000", Description = "PersonId sem os hífens obrigatórios")]
     [TestCase("{550e8400-e29b-41d4-a716-446655440000}", Description = "PersonId com colchetes inválidos")]
     [TestCase("550E8400-E29B-41D4-G716-446655440000", Description = "PersonId com um caractere fora do intervalo hexadecimal")]
-    public void CreateDeposit_WhenPersonIdIsNotValid_ThenReturnsAError(string personId)
+    public void CreateDeposit_WhenPersonIdIsNotValid_ThenShouldReturnAError(string personId)
     {
         // Arrange
         _model.Body!.PersonId = personId;
@@ -129,7 +129,7 @@ public class CreateDepositModelValidatorTests
     [TestCase(-1)]
     [TestCase(-50)]
     [TestCase(-100)]
-    public void CreateAccount_WhenBalanceIsLessOrEqualThanZero_ThenReturnsAError(decimal value)
+    public void CreateAccount_WhenBalanceIsLessOrEqualThanZero_ThenShouldReturnAError(decimal value)
     {
         // Arrange
         _model.Body!.Value = value;

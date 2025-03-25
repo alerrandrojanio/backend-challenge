@@ -153,4 +153,13 @@
   <data name="Error.GenericError" xml:space="preserve">
     <value>Ocorreu um erro interno, tente novamente mais tarde</value>
   </data>
+  <data name="Property.BirthDate.Future" xml:space="preserve">
+    <value>A valor da propriedade BithDate não pode ser maior que a data atual</value>
+  </data>
+  <data name="Property.BirthDate.Invalid" xml:space="preserve">
+    <value>A data repassada em BithDate é inválida</value>
+  </data>
+  <data name="Property.OnlyDigits" xml:space="preserve">
+    <value>A propriedade {0} deve conter apenas digitos</value>
+  </data>
 </root>

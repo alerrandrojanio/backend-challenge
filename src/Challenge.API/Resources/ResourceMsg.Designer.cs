@@ -97,6 +97,24 @@ namespace Challenge.API.Resources {
         }
         
         /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a A valor da propriedade BithDate não pode ser maior que a data atual.
+        /// </summary>
+        internal static string Property_BirthDate_Future {
+            get {
+                return ResourceManager.GetString("Property.BirthDate.Future", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a A data repassada em BithDate é inválida.
+        /// </summary>
+        internal static string Property_BirthDate_Invalid {
+            get {
+                return ResourceManager.GetString("Property.BirthDate.Invalid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a A propriedade Email está fora do padrão correto.
         /// </summary>
         internal static string Property_Email_Format {
@@ -156,6 +174,15 @@ namespace Challenge.API.Resources {
         internal static string Property_MinimumLength {
             get {
                 return ResourceManager.GetString("Property.MinimumLength", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a A propriedade {0} deve conter apenas digitos.
+        /// </summary>
+        internal static string Property_OnlyDigits {
+            get {
+                return ResourceManager.GetString("Property.OnlyDigits", resourceCulture);
             }
         }
         

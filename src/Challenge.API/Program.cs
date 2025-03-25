@@ -23,6 +23,8 @@ builder.Services.AddFluentValidationAutoValidation();
 
 builder.Services.AddFluentValidators(Assembly.GetExecutingAssembly());
 
+builder.Services.AddRedisConnection(builder.Configuration);
+
 builder.Services.AddControllers();
 
 builder.Services.AddApiVersioning(setup =>

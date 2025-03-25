@@ -7,6 +7,8 @@ using FluentValidation;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
+using StackExchange.Redis;
 using System.Reflection;
 
 namespace Challenge.DI.PipelineExtensions;
@@ -28,6 +30,7 @@ public static class PipelineExtensions
         services.AddScoped<ITransferRepository, TransferRepository>();
         services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<IUserTokenRepository, UserTokenRepository>();
+        services.AddScoped<IDepositRepository, DepositRepository>();
 
         services.AddScoped<PasswordHasher<User>>();
     }
@@ -40,6 +43,7 @@ public static class PipelineExtensions
         });
 
         services.Configure<AuthSettings>(configuration.GetSection(nameof(AuthSettings)));
+        services.Configure<CacheSettings>(configuration.GetSection(nameof(CacheSettings)));
     }
 
     public static IServiceCollection AddFluentValidators(this IServiceCollection services, Assembly assembly)
@@ -60,5 +64,18 @@ public static class PipelineExtensions
         }
 
         return services;
+    }
+
+    public static void AddRedisConnection(this IServiceCollection services, IConfiguration configuration)
+    {
+        services.AddSingleton<IConnectionMultiplexer>(provider =>
+        {
+            var cacheSettings = provider.GetRequiredService<IOptions<CacheSettings>>().Value;
+            
+            if (string.IsNullOrEmpty(cacheSettings.RedisUrl))
+                throw new ArgumentNullException(nameof(cacheSettings.RedisUrl), "A conexão do Redis não foi configurada");
+            
+            return ConnectionMultiplexer.Connect(cacheSettings.RedisUrl);
+        });
     }
 }

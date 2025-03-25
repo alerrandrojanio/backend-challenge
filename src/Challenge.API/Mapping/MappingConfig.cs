@@ -1,4 +1,5 @@
-﻿using Challenge.Domain.DTOs.Account;
+﻿using Challenge.API.Models.Account;
+using Challenge.Domain.DTOs.Account;
 using Challenge.Domain.DTOs.Account.Response;
 using Challenge.Domain.DTOs.Auth;
 using Challenge.Domain.DTOs.Auth.Response;
@@ -84,5 +85,24 @@ public static class MappingConfig
            .Map(dest => dest.Token, src => src.Token)
            .Map(dest => dest.Expiration, src => src.Expiration);
         #endregion CreateToken
+
+        #region CreateDeposit
+        TypeAdapterConfig<CreateDepositModel, CreateDepositDTO>.NewConfig()
+           .Map(dest => dest.Value, src => src.Body!.Value)
+           .Map(dest => dest.PersonId, src => src.Body!.PersonId)
+           .Map(dest => dest.AccountNumber, src => src.AccountNumber);
+
+        TypeAdapterConfig<CreateDepositDTO, Deposit>.NewConfig()
+            .Map(dest => dest.Value, src => src.Value)
+            .Map(dest => dest.AccountNumber, src => src.AccountNumber)
+            .Map(dest => dest.Person!.Id, src => src.PersonId);
+
+        TypeAdapterConfig<Deposit, CreateDepositResponseDTO>.NewConfig()
+            .Map(dest => dest.DepositId, src => src.Id)
+            .Map(dest => dest.Value, src => src.Value)
+            .Map(dest => dest.PersonId, src => src.Person!.Id)
+            .Map(dest => dest.AccountNumber, src => src.AccountNumber)
+            .Map(dest => dest.CreatedAt, src => src.CreatedAt);
+        #endregion CreateDeposit
     }
 }

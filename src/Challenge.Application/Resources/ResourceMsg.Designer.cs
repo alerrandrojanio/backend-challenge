@@ -70,6 +70,15 @@ namespace Challenge.Application.Resources {
         }
         
         /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a O AccountNumber não pertence a Person.
+        /// </summary>
+        internal static string Account_AccountNumber_Invalid {
+            get {
+                return ResourceManager.GetString("Account.AccountNumber.Invalid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a O pagador não possui fundos suficientes para a transação.
         /// </summary>
         internal static string Account_InsufficientFunds {
@@ -102,6 +111,15 @@ namespace Challenge.Application.Resources {
         internal static string Person_NotFound {
             get {
                 return ResourceManager.GetString("Person.NotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a O pagador não pode ser um logista.
+        /// </summary>
+        internal static string Transfer_Payer_IsMerchant {
+            get {
+                return ResourceManager.GetString("Transfer.Payer.IsMerchant", resourceCulture);
             }
         }
         

@@ -84,6 +84,7 @@ public class AuthService : IAuthService
         catch
         {
             _unitOfWork.Rollback();
+            throw;
         }
 
         return createUserTokenResponseDTO;

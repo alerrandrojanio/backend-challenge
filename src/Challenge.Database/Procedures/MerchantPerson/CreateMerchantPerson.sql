@@ -11,7 +11,7 @@ AS
 BEGIN
     DECLARE @GeneratedId TABLE (MerchantPersonId UNIQUEIDENTIFIER);
     
-    INSERT INTO [IndividualPerson] 
+    INSERT INTO [MerchantPerson] 
         ([PersonId],
         [CNPJ],
 		[MerchantName],

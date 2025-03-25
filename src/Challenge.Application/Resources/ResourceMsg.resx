@@ -120,6 +120,9 @@
   <data name="Account.AccountNumber.Exists" xml:space="preserve">
     <value>AccountNumber já existente</value>
   </data>
+  <data name="Account.AccountNumber.Invalid" xml:space="preserve">
+    <value>O AccountNumber não pertence a Person</value>
+  </data>
   <data name="Account.InsufficientFunds" xml:space="preserve">
     <value>O pagador não possui fundos suficientes para a transação</value>
   </data>
@@ -131,6 +134,9 @@
   </data>
   <data name="Person.NotFound" xml:space="preserve">
     <value>Person não encontrada para Id: {0}</value>
+  </data>
+  <data name="Transfer.Payer.IsMerchant" xml:space="preserve">
+    <value>O pagador não pode ser um logista</value>
   </data>
   <data name="User.Validade.Fail" xml:space="preserve">
     <value>Usuário ou senha incorretos</value>

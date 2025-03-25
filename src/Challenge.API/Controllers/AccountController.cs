@@ -39,6 +39,22 @@ public class AccountController : ControllerBase
 
         CreateTransferResponseDTO? createTransferResponseDTO = _accountService.CreateTransfer(createTransferDTO);
 
-        return Ok();
+        if (createTransferResponseDTO is null)
+            return BadRequest();
+
+        return Ok(createTransferResponseDTO);
+    }
+
+    [HttpPost("{AccountNumber}/deposit")]
+    public async Task<ActionResult> CreateDeposit([FromRoute] CreateDepositModel createDepositModel)
+    {
+        CreateDepositDTO createDepositDTO = createDepositModel.Adapt<CreateDepositDTO>();
+
+        CreateDepositResponseDTO? createDepositResponseDTO = _accountService.CreateDeposit(createDepositDTO);
+
+        if (createDepositResponseDTO is null)
+            return BadRequest();
+
+        return Ok(createDepositResponseDTO);
     }
 }

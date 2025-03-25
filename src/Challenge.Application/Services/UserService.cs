@@ -44,6 +44,7 @@ public class UserService : IUserService
         catch
         {
             _unitOfWork.Rollback();
+            throw;
         }
 
         return createUserResponseDTO;

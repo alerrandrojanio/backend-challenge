@@ -7,7 +7,7 @@ AS
 BEGIN
     SELECT 
         [AccountId],
-        [PersonId]
+        [PersonId],
         [AccountNumber],
         [Balance],
         [CreatedAt]

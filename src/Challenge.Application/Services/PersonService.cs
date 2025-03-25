@@ -44,6 +44,7 @@ public class PersonService : IPersonService
         catch
         {
             _unitOfWork.Rollback();
+            throw;
         }
 
         return createIndividualPersonResponseDTO;
@@ -72,6 +73,7 @@ public class PersonService : IPersonService
         catch
         {
             _unitOfWork.Rollback();
+            throw;
         }
 
         return createMerchantPersonResponseDTO;

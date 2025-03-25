@@ -16,9 +16,6 @@ builder.Services.ConfigureSettings(builder.Configuration);
 
 MappingConfig.RegisterMappings();
 
-ValidatorOptions.Global.DefaultClassLevelCascadeMode = CascadeMode.Stop;
-
-
 builder.Services.AddFluentValidationAutoValidation();
 
 builder.Services.AddFluentValidators(Assembly.GetExecutingAssembly());

@@ -6,6 +6,7 @@ using NUnit.Framework;
 
 namespace Challenge.API.Tests.Validators.Person;
 
+[TestFixture]
 public class CreateIndividualPersonModelValidatorTests
 {
     private CreateIndividualPersonModel _model;

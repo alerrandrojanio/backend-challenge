@@ -5,6 +5,7 @@ using FluentValidation.Results;
 
 namespace Challenge.API.Tests.Validators.Person;
 
+[TestFixture]
 public class CreateMerchantPersonModelValidatorTests
 {
     private CreateMerchantPersonModel _model;

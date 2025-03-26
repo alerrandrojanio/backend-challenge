@@ -116,6 +116,7 @@ public class AccountRepository : IAccountRepository
         command.Parameters.Add(new SqlParameter("@personId", account.Person?.Id));
         command.Parameters.Add(new SqlParameter("@accountNumber", account.AccountNumber));
         command.Parameters.Add(new SqlParameter("@balance", account.Balance));
+        command.Parameters.Add(new SqlParameter("@createdAt", account.CreatedAt = DateTime.Now));
 
         var result = command.ExecuteScalar();
 

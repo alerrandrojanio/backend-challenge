@@ -1,10 +1,12 @@
-﻿using Challenge.Application.Resources;
+﻿using Challenge.Application.Extensions;
+using Challenge.Application.Resources;
 using Challenge.Domain.DTOs.Account;
 using Challenge.Domain.DTOs.Account.Response;
+using Challenge.Domain.DTOs.Email;
 using Challenge.Domain.Entities;
+using Challenge.Domain.Enums;
 using Challenge.Domain.Exceptions;
 using Challenge.Domain.Interfaces;
-using Challenge.Infrastructure.Repositories;
 using Mapster;
 using System.Net;
 
@@ -17,16 +19,20 @@ public class AccountService : IAccountService
     private readonly ITransferRepository _transferRepository;
     private readonly IDepositRepository _depositRepository;
     private readonly IMerchantPersonRepository _merchantPersonRepository;
+    private readonly IEmailTemplateRepository _emailTemplateRepository;
     private readonly IUnitOfWork _unitOfWork;
+    private readonly ISendEmailIntegrationService _sendEmailIntegrationService;
 
-    public AccountService(IAccountRepository accountRepository, IPersonRepository personRepository, ITransferRepository transferRepository, IDepositRepository depositRepository, IMerchantPersonRepository merchantPersonRepository, IUnitOfWork unitOfWork)
+    public AccountService(IAccountRepository accountRepository, IPersonRepository personRepository, ITransferRepository transferRepository, IDepositRepository depositRepository, IMerchantPersonRepository merchantPersonRepository, IEmailTemplateRepository emailTemplateRepository, IUnitOfWork unitOfWork, ISendEmailIntegrationService sendEmailIntegrationService)
     {
         _accountRepository = accountRepository;
         _personRepository = personRepository;
         _transferRepository = transferRepository;
         _depositRepository = depositRepository;
         _merchantPersonRepository = merchantPersonRepository;
+        _emailTemplateRepository = emailTemplateRepository;
         _unitOfWork = unitOfWork;
+        _sendEmailIntegrationService = sendEmailIntegrationService;
     }
 
     public CreateAccountResponseDTO? CreateAccount(CreateAccountDTO createAccountDTO)
@@ -69,7 +75,7 @@ public class AccountService : IAccountService
         return createAccountResponseDTO;
       }
 
-    public CreateTransferResponseDTO? CreateTransfer(CreateTransferDTO createTransferDTO)
+    public async Task<CreateTransferResponseDTO?> CreateTransfer(CreateTransferDTO createTransferDTO)
     {
         CreateTransferResponseDTO? createTransferResponseDTO = null;
 
@@ -117,9 +123,20 @@ public class AccountService : IAccountService
 
             _transferRepository.CreateTransfer(transfer);
 
-            createTransferResponseDTO = transfer.Adapt<CreateTransferResponseDTO>();
+            createTransferResponseDTO = ValueTuple.Create(transfer, payee, payeeAccount).Adapt<CreateTransferResponseDTO>();
 
             _unitOfWork.Commit();
+
+            EmailTemplate? emailTemplate = _emailTemplateRepository.GetEmailTemplateByType(EmailType.TRANSFER);
+
+            if (emailTemplate is not null)
+            {
+                emailTemplate.Body = EmailExtensions.GenerateEmailBody(emailTemplate.Body, createTransferResponseDTO);
+
+                EmailDTO emailDTO = ValueTuple.Create(payee, emailTemplate).Adapt<EmailDTO>();
+
+                await _sendEmailIntegrationService.SendEmailAsync(emailDTO);
+            }
         }
         catch
         {

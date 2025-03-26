@@ -37,7 +37,7 @@ public class AccountController : ControllerBase
     {
         CreateTransferDTO createTransferDTO = createTransferModel.Adapt<CreateTransferDTO>();
 
-        CreateTransferResponseDTO? createTransferResponseDTO = _accountService.CreateTransfer(createTransferDTO);
+        CreateTransferResponseDTO? createTransferResponseDTO = await _accountService.CreateTransfer(createTransferDTO);
 
         if (createTransferResponseDTO is null)
             return BadRequest();

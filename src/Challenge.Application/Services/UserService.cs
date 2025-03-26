@@ -14,9 +14,9 @@ public class UserService : IUserService
 {
     private readonly IUserRepository _userRepository;
     private readonly IUnitOfWork _unitOfWork;
-    private readonly PasswordHasher<User> _passwordHasher;
+    private readonly IPasswordHasher<User> _passwordHasher;
 
-    public UserService(IUserRepository userRepository, IUnitOfWork unitOfWork, PasswordHasher<User> passwordHasher)
+    public UserService(IUserRepository userRepository, IUnitOfWork unitOfWork, IPasswordHasher<User> passwordHasher)
     {
         _userRepository = userRepository;
         _unitOfWork = unitOfWork;

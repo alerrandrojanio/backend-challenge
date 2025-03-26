@@ -2,7 +2,9 @@
 using Challenge.Domain.Entities;
 using Challenge.Domain.Interfaces;
 using Challenge.Infrastructure.Configurations;
+using Challenge.Infrastructure.Logging;
 using Challenge.Infrastructure.Repositories;
+using Challenge.Infrastructure.Services;
 using FluentValidation;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
@@ -22,6 +24,8 @@ public static class PipelineExtensions
         services.AddScoped<IAuthService, AuthService>();
         services.AddScoped<IUserService, UserService>();
 
+        services.AddScoped<ISendEmailIntegrationService, SendEmailIntegrationService>();
+
         services.AddScoped<IUnitOfWork, UnitOfWork>();
         services.AddScoped<IPersonRepository, PersonRepository>();
         services.AddScoped<IIndividualPersonRepository, IndividualPersonRepository>();
@@ -31,8 +35,11 @@ public static class PipelineExtensions
         services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<IUserTokenRepository, UserTokenRepository>();
         services.AddScoped<IDepositRepository, DepositRepository>();
+        services.AddScoped<IEmailTemplateRepository, EmailTemplateRepository>();
 
-        services.AddScoped<PasswordHasher<User>>();
+        services.AddScoped<IMongoDbLogger, MongoDbLogger>();
+
+        services.AddScoped<IPasswordHasher<User>, PasswordHasher<User>>();
     }
 
     public static void ConfigureSettings(this IServiceCollection services, IConfiguration configuration)
@@ -44,6 +51,8 @@ public static class PipelineExtensions
 
         services.Configure<AuthSettings>(configuration.GetSection(nameof(AuthSettings)));
         services.Configure<CacheSettings>(configuration.GetSection(nameof(CacheSettings)));
+        services.Configure<EmailSettings>(configuration.GetSection(nameof(EmailSettings)));
+        services.Configure<MongoDbSettings>(configuration.GetSection(nameof(MongoDbSettings)));
     }
 
     public static IServiceCollection AddFluentValidators(this IServiceCollection services, Assembly assembly)

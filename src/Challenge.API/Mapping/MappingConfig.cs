@@ -3,6 +3,8 @@ using Challenge.Domain.DTOs.Account;
 using Challenge.Domain.DTOs.Account.Response;
 using Challenge.Domain.DTOs.Auth;
 using Challenge.Domain.DTOs.Auth.Response;
+using Challenge.Domain.DTOs.Email;
+using Challenge.Domain.DTOs.Logging;
 using Challenge.Domain.DTOs.Person;
 using Challenge.Domain.DTOs.Person.Response;
 using Challenge.Domain.DTOs.User;
@@ -56,12 +58,14 @@ public static class MappingConfig
         #endregion CreateAccount
 
         #region CreateTransfer
-        TypeAdapterConfig<Transfer, CreateTransferResponseDTO>.NewConfig()
-           .Map(dest => dest.TransferId, src => src.Id)
-           .Map(dest => dest.Value, src => src.Value)
-           .Map(dest => dest.PayerId, src => src.PayerId)
-           .Map(dest => dest.PayeeId, src => src.PayeeId)
-           .Map(dest => dest.CreatedAt, src => src.CreatedAt);
+        TypeAdapterConfig<(Transfer transfer, Person payee, Account payeeAccount), CreateTransferResponseDTO>.NewConfig()
+           .Map(dest => dest.TransferId, src => src.transfer.Id)
+           .Map(dest => dest.Value, src => src.transfer.Value)
+           .Map(dest => dest.PayerId, src => src.transfer.PayerId)
+           .Map(dest => dest.PayeeId, src => src.transfer.PayeeId)
+           .Map(dest => dest.AccountNumber, src => src.payeeAccount.AccountNumber)
+           .Map(dest => dest.CreatedAt, src => src.transfer.CreatedAt)
+           .Map(dest => dest.PayeeName, src => src.payee.Name);
         #endregion CreateTransfer
 
         #region CreateUser
@@ -104,5 +108,21 @@ public static class MappingConfig
             .Map(dest => dest.AccountNumber, src => src.AccountNumber)
             .Map(dest => dest.CreatedAt, src => src.CreatedAt);
         #endregion CreateDeposit
+
+        #region EmailTemplate
+        TypeAdapterConfig<(Person payee, EmailTemplate emailTemplate), EmailDTO>.NewConfig()
+            .Map(dest => dest.ReceiverName, src => src.payee.Name)
+            .Map(dest => dest.EmailTo, src => src.payee.Email)
+            .Map(dest => dest.Subject, src => src.emailTemplate.Subject)
+            .Map(dest => dest.Body, src => src.emailTemplate.Body);
+        #endregion EmailTemplate
+
+        #region ErrorLog
+        TypeAdapterConfig<Exception, ErrorLogDTO>.NewConfig()
+            .Map(dest => dest.Message, src => src.Message)
+            .Map(dest => dest.StackTrace, src => src.StackTrace)
+            .Map(dest => dest.Source, src => src.Source)
+            .Map(dest => dest.InnerException, src => src.InnerException);
+        #endregion ErrorLog
     }
 }

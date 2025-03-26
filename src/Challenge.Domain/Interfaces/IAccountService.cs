@@ -7,7 +7,7 @@ public interface IAccountService
 {
     CreateAccountResponseDTO? CreateAccount(CreateAccountDTO createAccountDTO);
 
-    CreateTransferResponseDTO? CreateTransfer(CreateTransferDTO createTransferDTO);
+    Task<CreateTransferResponseDTO?> CreateTransfer(CreateTransferDTO createTransferDTO);
 
     CreateDepositResponseDTO? CreateDeposit(CreateDepositDTO createDepositDTO);
 }

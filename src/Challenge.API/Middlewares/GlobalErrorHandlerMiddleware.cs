@@ -1,5 +1,9 @@
 ﻿using Challenge.API.Resources;
+using Challenge.Domain.DTOs.Logging;
+using Challenge.Domain.Entities;
 using Challenge.Domain.Exceptions;
+using Challenge.Domain.Interfaces;
+using Mapster;
 using System.Net;
 using System.Text.Json;
 
@@ -9,11 +13,13 @@ public class GlobalErrorHandlerMiddleware
 {
     private readonly RequestDelegate _next;
     private readonly ILogger<GlobalErrorHandlerMiddleware> _logger;
+    private readonly IServiceScopeFactory _scopeFactory;
 
-    public GlobalErrorHandlerMiddleware(RequestDelegate next, ILogger<GlobalErrorHandlerMiddleware> logger)
+    public GlobalErrorHandlerMiddleware(RequestDelegate next, ILogger<GlobalErrorHandlerMiddleware> logger, IServiceScopeFactory scopeFactory)
     {
         _next = next;
         _logger = logger;
+        _scopeFactory = scopeFactory;
     }
 
     public async Task Invoke(HttpContext context)
@@ -25,6 +31,15 @@ public class GlobalErrorHandlerMiddleware
         catch (Exception ex)
         {
             _logger.LogError(ex, "Erro inesperado: {Message}", ex.Message);
+
+            using (var scope = _scopeFactory.CreateScope())
+            {
+                var scopedMongoDbLogger = scope.ServiceProvider.GetRequiredService<IMongoDbLogger>();
+
+                ErrorLogDTO errorLogDTO = ex.Adapt<ErrorLogDTO>();
+
+               await scopedMongoDbLogger.RegisterLog(errorLogDTO);
+            }
 
             if (ex is ServiceException serviceException)
                 await HandleExceptionAsync(context, serviceException);

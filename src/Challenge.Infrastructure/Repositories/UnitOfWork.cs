@@ -2,7 +2,6 @@
 using Challenge.Infrastructure.Configurations;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Options;
-using System.Data;
 
 namespace Challenge.Infrastructure.Repositories;
 
@@ -51,6 +50,5 @@ public class UnitOfWork : IUnitOfWork
     public void Dispose()
     {
         Transaction?.Dispose();
-        _connection?.Dispose();
     }
 }

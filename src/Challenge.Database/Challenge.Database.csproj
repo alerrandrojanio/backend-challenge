@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <Folder Include="Procedures\Deposit\" />
+    <Folder Include="Procedures\EmailTemplate\" />
     <Folder Include="Procedures\User\" />
   </ItemGroup>
 

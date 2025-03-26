@@ -9,6 +9,10 @@ public class CreateTransferResponseDTO
     public Guid PayerId { get; set; }
     
     public Guid PayeeId { get; set; }
-    
+
+    public string PayeeName { get; set; } = string.Empty;
+
+    public string AccountNumber { get; set; } = string.Empty;
+
     public DateTime CreatedAt { get; set; }
 }

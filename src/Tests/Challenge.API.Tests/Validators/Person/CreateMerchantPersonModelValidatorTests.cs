@@ -206,13 +206,4 @@ public class CreateMerchantPersonModelValidatorTests
         result.Errors.Should().Contain(x => x.PropertyName == nameof(_model.CNPJ) && x.ErrorMessage == errorMessage);
     }
     #endregion CNPJ
-
-    #region MerchantName
-    #endregion MerchantName
-
-    #region MerchantAddress
-    #endregion MerchantAddress
-
-    #region MerchantContact
-    #endregion MerchantContact
 }

@@ -12,6 +12,7 @@ using Challenge.Domain.Entities;
 using Challenge.Domain.Exceptions;
 using System.Net;
 using Mapster;
+using Challenge.Domain.DTOs.User;
 
 namespace Challenge.Application.Services;
 
@@ -36,7 +37,9 @@ public class AuthService : IAuthService
         
         try
         {
-            _userService.ValidateUser(createUserTokenDTO.UserId, createUserTokenDTO.Password);
+            ValidateUserDTO validateUserDTO = createUserTokenDTO.Adapt<ValidateUserDTO>();
+
+            _userService.ValidateUser(validateUserDTO);
 
             UserToken? token = _tokenRepository.GetLatestValidTokenByUserId(createUserTokenDTO.UserId);
 

@@ -1,6 +1,5 @@
 ﻿using Challenge.API.Resources;
 using Challenge.Domain.DTOs.Logging;
-using Challenge.Domain.Entities;
 using Challenge.Domain.Exceptions;
 using Challenge.Domain.Interfaces;
 using Mapster;
@@ -30,13 +29,11 @@ public class GlobalErrorHandlerMiddleware
         } 
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Erro inesperado: {Message}", ex.Message);
-
-            using (var scope = _scopeFactory.CreateScope())
+            using (IServiceScope scope = _scopeFactory.CreateScope())
             {
-                var scopedMongoDbLogger = scope.ServiceProvider.GetRequiredService<IMongoDbLogger>();
+               IMongoDbLogger scopedMongoDbLogger = scope.ServiceProvider.GetRequiredService<IMongoDbLogger>();
 
-                ErrorLogDTO errorLogDTO = ex.Adapt<ErrorLogDTO>();
+               ErrorLogDTO errorLogDTO = ex.Adapt<ErrorLogDTO>();
 
                await scopedMongoDbLogger.RegisterLog(errorLogDTO);
             }
@@ -66,6 +63,7 @@ public class GlobalErrorHandlerMiddleware
         context.Response.ContentType = "application/json";
 
         string result = JsonSerializer.Serialize(errorResponse);
+        
         await context.Response.WriteAsync(result);
     }
 }

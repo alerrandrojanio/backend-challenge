@@ -5,7 +5,6 @@ using Challenge.Infrastructure.Extensions;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Options;
 using StackExchange.Redis;
-using System;
 using System.Data;
 using System.Text.Json;
 

@@ -50,14 +50,14 @@ public class UserService : IUserService
         return createUserResponseDTO;
     }
 
-    public void ValidateUser(Guid userId, string password)
+    public void ValidateUser(ValidateUserDTO validateUserDTO)
     {
-        User? user = _userRepository.GetUserById(userId);
+        User? user = _userRepository.GetUserById(validateUserDTO.UserId);
 
         if (user is null)
             throw new ServiceException(ResourceMsg.User_Validade_Fail, HttpStatusCode.BadRequest);
 
-        PasswordVerificationResult result = _passwordHasher.VerifyHashedPassword(null!, user.PasswordHash, password);
+        PasswordVerificationResult result = _passwordHasher.VerifyHashedPassword(null!, user.PasswordHash, validateUserDTO.Password);
 
         if (result != PasswordVerificationResult.Success)
             throw new ServiceException(ResourceMsg.User_Validade_Fail, HttpStatusCode.BadRequest);

@@ -18,9 +18,10 @@ public class MongoDbLogger : IMongoDbLogger
     public MongoDbLogger(IOptions<MongoDbSettings> mongoDbSettings, ILogger<MongoDbLogger> logger)
     {
         _mongoDbSettings = mongoDbSettings.Value;
+
+        MongoClient client = new(_mongoDbSettings.ConnectionString);
         
-        var client = new MongoClient(_mongoDbSettings.ConnectionString);
-        var database = client.GetDatabase(_mongoDbSettings.DatabaseName);
+        IMongoDatabase database = client.GetDatabase(_mongoDbSettings.DatabaseName);
 
         _logCollection = database.GetCollection<ErrorLog>(nameof(ErrorLog));
         _logger = logger;
@@ -36,7 +37,7 @@ public class MongoDbLogger : IMongoDbLogger
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Erro ao registrar log no MongoDB");
+            _logger.LogError(ex, $"Erro inesperado: {ex.Message}");
         }
     }
 }

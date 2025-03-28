@@ -38,7 +38,7 @@ public class AuthorizationMiddleware
             return;
         }
 
-        var token = context.Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last();
+        string? token = context.Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last();
 
         if (string.IsNullOrEmpty(token))
         {
@@ -51,11 +51,11 @@ public class AuthorizationMiddleware
 
         try
         {
-            var tokenHandler = new JwtSecurityTokenHandler();
+            JwtSecurityTokenHandler tokenHandler = new();
             
-            var key = Encoding.UTF8.GetBytes(_authSettings.SecretKey);
+            byte[] key = Encoding.UTF8.GetBytes(_authSettings.SecretKey);
 
-            var validationParameters = new TokenValidationParameters
+            TokenValidationParameters validationParameters = new()
             {
                 ValidateIssuerSigningKey = true,
                 IssuerSigningKey = new SymmetricSecurityKey(key),
@@ -65,9 +65,9 @@ public class AuthorizationMiddleware
                 ClockSkew = TimeSpan.Zero
             };
 
-            var principal = tokenHandler.ValidateToken(token, validationParameters, out SecurityToken validatedToken);
+            ClaimsPrincipal principal = tokenHandler.ValidateToken(token, validationParameters, out SecurityToken validatedToken);
 
-            var jwtToken = (JwtSecurityToken)validatedToken;
+            JwtSecurityToken jwtToken = (JwtSecurityToken)validatedToken;
 
             if (jwtToken.ValidTo < DateTime.UtcNow)
                 throw new ServiceException(ResourceMsg.Authorization_Token_Expired, HttpStatusCode.Unauthorized);
@@ -77,9 +77,9 @@ public class AuthorizationMiddleware
             if (userId is null)
                 throw new ServiceException(ResourceMsg.Authorization_Token_Invalid, HttpStatusCode.Unauthorized);
 
-            using (var scope = _scopeFactory.CreateScope())
+            using (IServiceScope scope = _scopeFactory.CreateScope())
             {
-                var scopedUserRepository = scope.ServiceProvider.GetRequiredService<IUserRepository>();
+                IUserRepository scopedUserRepository = scope.ServiceProvider.GetRequiredService<IUserRepository>();
 
                 User? user = scopedUserRepository.GetUserById(Guid.Parse(userId));
 
@@ -99,7 +99,6 @@ public class AuthorizationMiddleware
             return;
         }
         
-
         await _next(context);
     }
 }

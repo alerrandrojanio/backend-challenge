@@ -2,7 +2,6 @@
 using Challenge.Domain.Interfaces;
 using Microsoft.Data.SqlClient;
 using System.Data;
-using System;
 
 namespace Challenge.Infrastructure.Repositories;
 

@@ -7,5 +7,5 @@ public interface IUserService
 {
     CreateUserResponseDTO? CreateUser(CreateUserDTO createUserDTO);
 
-    void ValidateUser(Guid userId, string password);
+    void ValidateUser(ValidateUserDTO validateUserDTO);
 }

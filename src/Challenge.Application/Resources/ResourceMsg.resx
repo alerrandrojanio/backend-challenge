@@ -135,6 +135,9 @@
   <data name="Person.NotFound" xml:space="preserve">
     <value>Person não encontrada para Id: {0}</value>
   </data>
+  <data name="Transfer.Authorization.Failed" xml:space="preserve">
+    <value>A tranferência não foi permitida</value>
+  </data>
   <data name="Transfer.Payer.IsMerchant" xml:space="preserve">
     <value>O pagador não pode ser um logista</value>
   </data>

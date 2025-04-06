@@ -12,7 +12,7 @@ using Challenge.Domain.DTOs.User.Response;
 using Challenge.Domain.Entities;
 using Mapster;
 
-namespace Challenge.Infrastructure.Mapping;
+namespace Challenge.API.Mapping;
 
 public static class MappingConfig
 {

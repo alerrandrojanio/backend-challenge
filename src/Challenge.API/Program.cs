@@ -1,8 +1,6 @@
+using Challenge.API.Mapping;
 using Challenge.API.Middlewares;
-using Challenge.API.Validators.Account;
-using Challenge.DI.PipelineExtensions;
-using Challenge.Infrastructure.Mapping;
-using FluentValidation;
+using Challenge.DI.IoC;
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Mvc;
 using System.Reflection;

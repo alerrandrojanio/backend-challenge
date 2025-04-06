@@ -1,8 +1,8 @@
-﻿using Challenge.Application.Services;
+﻿using Challenge.API.Mapping;
+using Challenge.Application.Services;
 using Challenge.Domain.DTOs.User;
 using Challenge.Domain.DTOs.User.Response;
 using Challenge.Domain.Interfaces;
-using Challenge.Infrastructure.Mapping;
 using FluentAssertions;
 using Microsoft.AspNetCore.Identity;
 using Moq;

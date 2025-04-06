@@ -115,6 +115,15 @@ namespace Challenge.Application.Resources {
         }
         
         /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a A tranferência não foi permitida.
+        /// </summary>
+        internal static string Transfer_Authorization_Failed {
+            get {
+                return ResourceManager.GetString("Transfer.Authorization.Failed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a O pagador não pode ser um logista.
         /// </summary>
         internal static string Transfer_Payer_IsMerchant {

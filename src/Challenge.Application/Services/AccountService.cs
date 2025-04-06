@@ -3,6 +3,7 @@ using Challenge.Application.Resources;
 using Challenge.Domain.DTOs.Account;
 using Challenge.Domain.DTOs.Account.Response;
 using Challenge.Domain.DTOs.Email;
+using Challenge.Domain.DTOs.Transfer.Response;
 using Challenge.Domain.Entities;
 using Challenge.Domain.Enums;
 using Challenge.Domain.Exceptions;
@@ -22,8 +23,9 @@ public class AccountService : IAccountService
     private readonly IEmailTemplateRepository _emailTemplateRepository;
     private readonly IUnitOfWork _unitOfWork;
     private readonly ISendEmailIntegrationService _sendEmailIntegrationService;
+    private readonly ITransferAuthorizeIntegrationService _transferAuthorizeIntegrationService;
 
-    public AccountService(IAccountRepository accountRepository, IPersonRepository personRepository, ITransferRepository transferRepository, IDepositRepository depositRepository, IMerchantPersonRepository merchantPersonRepository, IEmailTemplateRepository emailTemplateRepository, IUnitOfWork unitOfWork, ISendEmailIntegrationService sendEmailIntegrationService)
+    public AccountService(IAccountRepository accountRepository, IPersonRepository personRepository, ITransferRepository transferRepository, IDepositRepository depositRepository, IMerchantPersonRepository merchantPersonRepository, IEmailTemplateRepository emailTemplateRepository, IUnitOfWork unitOfWork, ISendEmailIntegrationService sendEmailIntegrationService, ITransferAuthorizeIntegrationService transferAuthorizeIntegrationService)
     {
         _accountRepository = accountRepository;
         _personRepository = personRepository;
@@ -33,6 +35,7 @@ public class AccountService : IAccountService
         _emailTemplateRepository = emailTemplateRepository;
         _unitOfWork = unitOfWork;
         _sendEmailIntegrationService = sendEmailIntegrationService;
+        _transferAuthorizeIntegrationService = transferAuthorizeIntegrationService;
     }
 
     public CreateAccountResponseDTO? CreateAccount(CreateAccountDTO createAccountDTO)
@@ -147,7 +150,7 @@ public class AccountService : IAccountService
         return createTransferResponseDTO;
     }
 
-    public CreateDepositResponseDTO? CreateDeposit(CreateDepositDTO createDepositDTO)
+    public async Task<CreateDepositResponseDTO?> CreateDeposit(CreateDepositDTO createDepositDTO)
     {
         CreateDepositResponseDTO? createDepositResponseDTO = null;
 
@@ -167,6 +170,11 @@ public class AccountService : IAccountService
                 throw new ServiceException(ResourceMsg.Account_AccountNumber_Invalid, HttpStatusCode.BadRequest);
 
             account.Balance += createDepositDTO.Value;
+
+            TransferAuthorizationResponseDTO transferAuthorizationResponseDTO = await _transferAuthorizeIntegrationService.AuthorizeTransfer();
+
+            if (!transferAuthorizationResponseDTO.Data.Authorization.Value)
+                throw new ServiceException(ResourceMsg.Transfer_Authorization_Failed, HttpStatusCode.BadRequest);
 
             _unitOfWork.BeginTransaction();
 

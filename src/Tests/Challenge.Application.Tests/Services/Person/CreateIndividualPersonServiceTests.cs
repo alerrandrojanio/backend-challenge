@@ -1,8 +1,8 @@
-﻿using Challenge.Application.Services;
+﻿using Challenge.API.Mapping;
+using Challenge.Application.Services;
 using Challenge.Domain.DTOs.Person;
 using Challenge.Domain.DTOs.Person.Response;
 using Challenge.Domain.Interfaces;
-using Challenge.Infrastructure.Mapping;
 using FluentAssertions;
 using Moq;
 

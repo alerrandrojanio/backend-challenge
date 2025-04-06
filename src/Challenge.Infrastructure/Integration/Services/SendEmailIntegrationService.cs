@@ -7,7 +7,7 @@ using MailKit.Net.Smtp;
 using Challenge.Domain.DTOs.Logging;
 using Mapster;
 
-namespace Challenge.Infrastructure.Services;
+namespace Challenge.Infrastructure.Integration.Services;
 
 public class SendEmailIntegrationService : ISendEmailIntegrationService
 {

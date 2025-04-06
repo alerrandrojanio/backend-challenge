@@ -50,7 +50,7 @@ public class AccountController : ControllerBase
     {
         CreateDepositDTO createDepositDTO = createDepositModel.Adapt<CreateDepositDTO>();
 
-        CreateDepositResponseDTO? createDepositResponseDTO = _accountService.CreateDeposit(createDepositDTO);
+        CreateDepositResponseDTO? createDepositResponseDTO = await _accountService.CreateDeposit(createDepositDTO);
 
         if (createDepositResponseDTO is null)
             return BadRequest();
